@@ -10,6 +10,14 @@ export const Container = styled.div`
   flex-direction: column;
   position: relative;
   z-index: 2;
+  pointer-events: none;
+`;
+
+export const Content = styled.main`
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  pointer-events: all;
 `;
 
 export const Title = styled.div`
