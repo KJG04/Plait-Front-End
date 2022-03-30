@@ -2,6 +2,7 @@ import { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { Fragment } from "react";
+import ScreenSaver from "../../components/ScreenSaver";
 import * as S from "./styles";
 
 const MainContainer: NextPage = () => {
@@ -10,6 +11,7 @@ const MainContainer: NextPage = () => {
       <Head>
         <title>Plait에 오신걸 환영합니다!</title>
       </Head>
+      <ScreenSaver />
       <S.Container>
         <S.Title>Plait에 오신걸 환영합니다!</S.Title>
         <S.Subtitle>

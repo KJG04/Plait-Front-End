@@ -8,6 +8,8 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  position: relative;
+  z-index: 2;
 `;
 
 export const Title = styled.div`
