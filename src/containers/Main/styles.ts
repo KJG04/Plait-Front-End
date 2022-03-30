@@ -25,5 +25,31 @@ export const Subtitle = styled.div`
 
 export const CodeInput = styled(Input)`
   text-align: center;
+`;
+
+export const BottomContainer = styled.div`
   margin-top: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  row-gap: 16px;
+`;
+
+export const Or = styled.div`
+  font: ${({ theme }) => theme.fonts.description};
+  color: ${({ theme }) => theme.colors.grayscale.darkWhite};
+`;
+
+export const NewRoom = styled.div`
+  & a {
+    text-decoration: underline;
+    font: ${({ theme }) => theme.fonts.body2};
+    color: ${({ theme }) => theme.colors.grayscale.darkWhite};
+    text-align: center;
+  }
+  & a:hover {
+    color: ${({ theme }) => theme.colors.grayscale.white};
+  }
 `;
