@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useRef } from "react";
-import { Engine, Render, Bodies, World } from "matter-js";
+import { Engine, Render, Bodies, World, Body, Vector } from "matter-js";
 import * as S from "./styles";
+import { useTheme } from "@emotion/react";
 
 const ScreenSaver = () => {
   const scene = useRef<HTMLDivElement>(null);
-  const isPressed = useRef<boolean>(false);
   const engine = useRef<Engine>(Engine.create());
+  const theme = useTheme();
 
   const doFirst = useCallback(() => {
     if (!scene.current) {
@@ -32,9 +33,25 @@ const ScreenSaver = () => {
       Bodies.rectangle(cw / 2, ch + 10, cw, 20, { isStatic: true }),
       Bodies.rectangle(cw + 10, ch / 2, 20, ch, { isStatic: true }),
     ]);
+    engine.current.gravity.scale = 0;
 
     Engine.run(engine.current);
     Render.run(render);
+
+    const ball = Bodies.circle(100, 200, 10 + Math.random() * 30, {
+      mass: 1,
+      restitution: 1,
+      friction: 0,
+      frictionAir: 0,
+      frictionStatic: 0,
+      render: {
+        fillStyle: theme.colors.primary,
+      },
+    });
+
+    Body.setVelocity(ball, Vector.create(1, 1));
+
+    World.add(engine.current.world, [ball]);
 
     return () => {
       Render.stop(render);
@@ -43,55 +60,13 @@ const ScreenSaver = () => {
       render.canvas.remove();
       render.textures = {};
     };
-  }, []);
+  }, [theme]);
 
   useEffect(() => {
     doFirst();
   }, [doFirst]);
 
-  const handleDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-    e.preventDefault();
-    isPressed.current = true;
-  };
-
-  const handleUp = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-    e.preventDefault();
-    isPressed.current = false;
-  };
-
-  const handleAddCircle = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (isPressed.current) {
-      e.stopPropagation();
-      e.preventDefault();
-
-      const ball = Bodies.circle(
-        e.clientX,
-        e.clientY,
-        10 + Math.random() * 30,
-        {
-          mass: 10,
-          restitution: 0.9,
-          friction: 0.005,
-          render: {
-            fillStyle: "#0000ff",
-          },
-        }
-      );
-      World.add(engine.current.world, [ball]);
-    }
-  };
-
-  return (
-    <S.Canvas
-      onMouseDown={handleDown}
-      onMouseUp={handleUp}
-      onMouseMove={handleAddCircle}
-    >
-      <S.Canvas ref={scene} />
-    </S.Canvas>
-  );
+  return <S.Canvas ref={scene} />;
 };
 
 export default ScreenSaver;
