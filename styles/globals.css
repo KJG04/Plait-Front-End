@@ -217,3 +217,7 @@ a,
 input::placeholder {
   user-select: none;
 }
+::selection {
+  background-color: #5ef090;
+  color: #ffffff;
+}
