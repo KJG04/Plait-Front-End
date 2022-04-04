@@ -212,3 +212,8 @@ th {
   text-align: left;
   font-weight: 700;
 }
+button,
+a,
+input::placeholder {
+  user-select: none;
+}
