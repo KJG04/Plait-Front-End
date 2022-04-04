@@ -11,7 +11,6 @@ import {
   MouseConstraint,
   Mouse,
   IMouseConstraintDefinition,
-  Constraint,
 } from "matter-js";
 import * as S from "./styles";
 import { useTheme } from "@emotion/react";
@@ -93,6 +92,7 @@ const ScreenSaver = () => {
     const constraints = MouseConstraint.create(engine.current, options);
     constraints.constraint.stiffness = 0.001;
     constraints.constraint.render.visible = false;
+    constraints.constraint.damping = 0.5;
     World.add(engine.current.world, constraints);
 
     var forceMagnitude = 0.001 * ball.mass;
