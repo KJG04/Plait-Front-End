@@ -11,6 +11,7 @@ import {
   MouseConstraint,
   Mouse,
   IMouseConstraintDefinition,
+  IBodyDefinition,
 } from "matter-js";
 import * as S from "./styles";
 import { useTheme } from "@emotion/react";
@@ -72,15 +73,22 @@ const ScreenSaver = () => {
     Runner.run(engine.current);
     Render.run(render.current);
 
-    const ball = Bodies.circle(100, 200, 30 + Math.random() * 30, {
+    const bodyOptions: IBodyDefinition = {
       restitution: 0.8,
       friction: 0.01,
       frictionAir: 0,
       density: 1,
-      inertia: Infinity,
+      isStatic: false,
       render: {
         fillStyle: theme.colors.primary,
       },
+    };
+
+    const ball = Bodies.circle(100, 200, 30, bodyOptions);
+    const box = Bodies.rectangle(cw * 0.9, ch * 0.8, 100, 100, {
+      ...bodyOptions,
+      chamfer: { radius: 20 },
+      angle: 45,
     });
 
     const mouse = Mouse.create(render.current.canvas);
@@ -91,8 +99,10 @@ const ScreenSaver = () => {
 
     const constraints = MouseConstraint.create(engine.current, options);
     constraints.constraint.stiffness = 0.001;
+    constraints.constraint.length = 20;
     constraints.constraint.render.visible = false;
     constraints.constraint.damping = 0.5;
+
     World.add(engine.current.world, constraints);
 
     var forceMagnitude = 0.001 * ball.mass;
@@ -103,8 +113,14 @@ const ScreenSaver = () => {
         Common.choose([1, -1]),
       y: -forceMagnitude + Common.random() * -forceMagnitude,
     });
+    Body.applyForce(box, ball.position, {
+      x:
+        (forceMagnitude + Common.random() * forceMagnitude) *
+        Common.choose([1, -1]),
+      y: -forceMagnitude + Common.random() * -forceMagnitude,
+    });
 
-    World.add(engine.current.world, [ball]);
+    World.add(engine.current.world, [ball, box]);
 
     return cleanUp;
   }, [cleanUp, theme]);
