@@ -12,7 +12,8 @@ export const Contianer = styled.button`
   column-gap: 12px;
   align-items: center;
 
-  &:hover {
+  &:hover,
+  &:focus-visible {
     background-color: ${({ theme }) => theme.colors.grayscale.gray};
   }
 `;

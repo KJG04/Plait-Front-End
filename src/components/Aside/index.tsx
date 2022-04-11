@@ -3,15 +3,14 @@ import Logo from "../../assets/Logo.svg";
 import Image from "next/image";
 import ChevronDown from "../../assets/chevron-down.svg";
 import Member from "../Member";
+import QueueContent from "../QueueContent";
 
 const Aside = () => {
   return (
     <S.Container>
       <S.Header>
         <Image src={Logo} alt="logo" />
-        <S.Leave>
-          <S.Leave>방 나가기</S.Leave>
-        </S.Leave>
+        <S.Leave>방 나가기</S.Leave>
       </S.Header>
       <S.Line />
       <div>
@@ -25,6 +24,18 @@ const Aside = () => {
       <Member />
       <Member />
       <Member />
+      <div>
+        <S.MemberHeader>
+          <span>대기열</span>
+        </S.MemberHeader>
+        <S.Line />
+      </div>
+      <S.QueueContainer>
+        <QueueContent />
+        <QueueContent />
+        <QueueContent />
+        <QueueContent />
+      </S.QueueContainer>
     </S.Container>
   );
 };

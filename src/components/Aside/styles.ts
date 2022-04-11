@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 export const Container = styled.aside`
-  padding: 36px 10px;
+  padding: 36px 10px 0px 10px;
   background-color: ${({ theme }) => theme.colors.grayscale.darkGray};
   display: flex;
   flex-direction: column;
@@ -31,7 +31,8 @@ export const Leave = styled.button`
   font: ${({ theme }) => theme.fonts.body2};
   transition: color 0.15s ease-in-out;
 
-  &:hover {
+  &:hover,
+  &:focus-visible {
     color: ${({ theme }) => theme.colors.grayscale.white};
   }
 `;
@@ -49,8 +50,17 @@ export const MemberHeader = styled.button`
   align-items: center;
   width: 100%;
 
-  &:hover {
+  &:hover,
+  &:focus-visible {
     background-color: ${({ theme }) => theme.colors.grayscale.gray};
     color: ${({ theme }) => theme.colors.grayscale.white};
   }
+`;
+
+export const QueueContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+  overflow: scroll;
+  flex: 1;
 `;

@@ -222,3 +222,6 @@ input::placeholder {
   background-color: #5ef090;
   color: #ffffff;
 }
+:focus-visible {
+  outline: 1px solid #5ef090;
+}
