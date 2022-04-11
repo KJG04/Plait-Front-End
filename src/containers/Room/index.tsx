@@ -1,7 +1,12 @@
 import { NextPage } from "next";
+import Aside from "../../components/Aside";
 
 const RoomContainer: NextPage = () => {
-  return <div>this is room</div>;
+  return (
+    <main>
+      <Aside />
+    </main>
+  );
 };
 
 export default RoomContainer;
