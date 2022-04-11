@@ -58,6 +58,7 @@ export const NewRoom = styled.div`
     font: ${({ theme }) => theme.fonts.body2};
     color: ${({ theme }) => theme.colors.grayscale.darkWhite};
     text-align: center;
+    transition: color 0.15s ease-in-out;
   }
   & a:hover {
     color: ${({ theme }) => theme.colors.grayscale.white};

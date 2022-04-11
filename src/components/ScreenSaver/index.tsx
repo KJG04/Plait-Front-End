@@ -117,6 +117,7 @@ const ScreenSaver = () => {
       80,
       [Svg.pathToVertices(triangleRef.current, 5)],
       {
+        density: 1,
         render: {
           fillStyle: theme.colors.primary,
         },
