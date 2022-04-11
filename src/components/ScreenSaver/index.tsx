@@ -82,7 +82,7 @@ const ScreenSaver = () => {
 
     const bodyOptions: IBodyDefinition = {
       restitution: 0.8,
-      friction: 0.01,
+      friction: 0.1,
       frictionAir: 0,
       density: 1,
       isStatic: false,
@@ -117,7 +117,7 @@ const ScreenSaver = () => {
       80,
       [Svg.pathToVertices(triangleRef.current, 5)],
       {
-        density: 1,
+        ...bodyOptions,
         render: {
           fillStyle: theme.colors.primary,
         },

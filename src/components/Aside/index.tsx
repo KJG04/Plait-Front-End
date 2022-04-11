@@ -30,12 +30,12 @@ const Aside = () => {
         </S.MemberHeader>
         <S.Line />
       </div>
-      <S.QueueContainer>
+      <S.ListContainer>
         <QueueContent />
         <QueueContent />
         <QueueContent />
         <QueueContent />
-      </S.QueueContainer>
+      </S.ListContainer>
     </S.Container>
   );
 };

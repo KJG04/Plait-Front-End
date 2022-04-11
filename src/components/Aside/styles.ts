@@ -57,11 +57,17 @@ export const MemberHeader = styled.button`
   }
 `;
 
-export const QueueContainer = styled.div`
+export const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 16px;
   overflow: scroll;
   flex: 1;
-  padding: 16px 0px;
+  padding-bottom: 16px;
+`;
+
+export const List = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
 `;
