@@ -43,7 +43,7 @@ export const theme: Theme = {
     heading3: `500 1.375rem 'Noto Sans KR', 'sans-serif'`,
     subtitle: `500 1.125rem 'Noto Sans KR', 'sans-serif'`,
     body1: `bold 1rem 'Noto Sans KR', 'sans-serif'`,
-    body2: `regular 1rem 'Noto Sans KR', 'sans-serif'`,
-    description: `regular 0.75rem 'Noto Sans KR', 'sans-serif'`,
+    body2: `400 1rem 'Noto Sans KR', 'sans-serif'`,
+    description: `400 0.875rem 'Noto Sans KR', 'sans-serif'`,
   },
 };

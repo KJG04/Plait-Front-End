@@ -1,7 +1,3 @@
-import type { NextPage } from "next";
+import { MainContainer } from "../src/containers";
 
-const Home: NextPage = () => {
-  return <div>hello world</div>;
-};
-
-export default Home;
+export default MainContainer;
