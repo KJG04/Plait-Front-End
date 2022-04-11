@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { Fragment, useCallback, useEffect, useRef } from "react";
 import {
   Engine,
   Render,
@@ -12,14 +12,21 @@ import {
   Mouse,
   IMouseConstraintDefinition,
   IBodyDefinition,
+  Svg,
 } from "matter-js";
 import * as S from "./styles";
 import { useTheme } from "@emotion/react";
+import Triangle from "./Triangle";
+
+if (process.browser) {
+  require("pathseg");
+}
 
 const ScreenSaver = () => {
   const scene = useRef<HTMLDivElement>(null);
   const engine = useRef<Engine>(Engine.create());
   const render = useRef<Render | undefined>(undefined);
+  const triangleRef = useRef<SVGPathElement>(null);
   const theme = useTheme();
 
   const cleanUp = useCallback(() => {
@@ -33,7 +40,7 @@ const ScreenSaver = () => {
   }, []);
 
   useEffect(() => {
-    if (!scene.current) {
+    if (!scene.current || !triangleRef.current) {
       return () => {};
     }
 
@@ -87,8 +94,7 @@ const ScreenSaver = () => {
     const ball = Bodies.circle(100, 200, 30, bodyOptions);
     const box = Bodies.rectangle(cw * 0.9, ch * 0.8, 100, 100, {
       ...bodyOptions,
-      chamfer: { radius: 20 },
-      angle: 45,
+      chamfer: { radius: 30 },
     });
 
     const mouse = Mouse.create(render.current.canvas);
@@ -98,34 +104,55 @@ const ScreenSaver = () => {
     };
 
     const constraints = MouseConstraint.create(engine.current, options);
-    constraints.constraint.stiffness = 0.001;
-    constraints.constraint.length = 20;
+    constraints.constraint.stiffness = 0.0005;
+    constraints.constraint.length = 0;
     constraints.constraint.render.visible = false;
-    constraints.constraint.damping = 0.5;
+    constraints.constraint.damping = 0.00001;
 
     World.add(engine.current.world, constraints);
 
-    var forceMagnitude = 0.001 * ball.mass;
+    const vertexSets: Body[] = [];
+    const v = Bodies.fromVertices(
+      500,
+      80,
+      [Svg.pathToVertices(triangleRef.current, 5)],
+      {
+        render: {
+          fillStyle: theme.colors.primary,
+        },
+      },
+      true
+    );
+    vertexSets.push(v);
 
-    Body.applyForce(ball, ball.position, {
-      x:
-        (forceMagnitude + Common.random() * forceMagnitude) *
-        Common.choose([1, -1]),
-      y: -forceMagnitude + Common.random() * -forceMagnitude,
-    });
-    Body.applyForce(box, ball.position, {
-      x:
-        (forceMagnitude + Common.random() * forceMagnitude) *
-        Common.choose([1, -1]),
-      y: -forceMagnitude + Common.random() * -forceMagnitude,
+    const bodies = [ball, box, ...vertexSets];
+
+    bodies.forEach((value) => {
+      var forceMagnitude = 0.005 * value.mass;
+
+      Body.applyForce(value, value.position, {
+        x:
+          (forceMagnitude + Common.random() * forceMagnitude) *
+          Common.choose([1, -1]),
+        y: -forceMagnitude + Common.random() * -forceMagnitude,
+      });
+
+      Body.setAngularVelocity(value, (Math.random() * forceMagnitude) / 1000);
     });
 
-    World.add(engine.current.world, [ball, box]);
+    World.add(engine.current.world, bodies);
 
     return cleanUp;
   }, [cleanUp, theme]);
 
-  return <S.Canvas ref={scene} />;
+  return (
+    <Fragment>
+      <S.Canvas ref={scene} />
+      <div style={{ display: "none" }}>
+        <Triangle ref={triangleRef} />
+      </div>
+    </Fragment>
+  );
 };
 
 export default ScreenSaver;
