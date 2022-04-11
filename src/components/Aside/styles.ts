@@ -63,4 +63,5 @@ export const QueueContainer = styled.div`
   row-gap: 16px;
   overflow: scroll;
   flex: 1;
+  padding: 16px 0px;
 `;
