@@ -3,7 +3,7 @@ import Logo from "../../assets/Logo.svg";
 import Image from "next/image";
 import Member from "../Member";
 import QueueContent from "../QueueContent";
-import { ChevronDown } from "../../assets/icons";
+import { ChevronDownIcon } from "../../assets/icons";
 
 const Aside = () => {
   return (
@@ -16,7 +16,7 @@ const Aside = () => {
       <div>
         <S.MemberHeader>
           <span>멤버</span>
-          <Image src={ChevronDown} alt="Chevron Down" />
+          <Image src={ChevronDownIcon} alt="Chevron Down" />
         </S.MemberHeader>
         <S.Line />
       </div>
