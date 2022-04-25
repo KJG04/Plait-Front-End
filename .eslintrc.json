@@ -1,6 +1,17 @@
 {
-  "extends": ["eslint:recommended", "next/core-web-vitals"],
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "next",
+    "next/core-web-vitals",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["@typescript-eslint", "react", "prettier"],
   "rules": {
-    "no-unused-vars": "warn"
+    "react/react-in-jsx-scope": "off"
+  },
+  "globals": {
+    "React": "writable"
   }
 }
