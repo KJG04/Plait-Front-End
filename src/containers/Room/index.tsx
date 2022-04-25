@@ -1,11 +1,16 @@
 import { NextPage } from "next";
 import Aside from "../../components/Aside";
+import BottomBar from "../../components/BottomBar";
+import * as S from "./styles";
 
 const RoomContainer: NextPage = () => {
   return (
-    <main>
-      <Aside />
-    </main>
+    <S.Container>
+      <S.TopContainer>
+        <Aside />
+      </S.TopContainer>
+      <BottomBar />
+    </S.Container>
   );
 };
 

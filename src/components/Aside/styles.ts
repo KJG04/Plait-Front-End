@@ -7,7 +7,6 @@ export const Container = styled.aside`
   flex-direction: column;
   row-gap: 16px;
   width: 450px;
-  height: 100vh;
 `;
 
 export const Header = styled.header`
