@@ -41,6 +41,7 @@ const ScreenSaver = () => {
 
   useEffect(() => {
     if (!scene.current || !triangleRef.current) {
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
       return () => {};
     }
 
@@ -122,14 +123,14 @@ const ScreenSaver = () => {
           fillStyle: theme.colors.primary,
         },
       },
-      true
+      true,
     );
     vertexSets.push(v);
 
     const bodies = [ball, box, ...vertexSets];
 
     bodies.forEach((value) => {
-      var forceMagnitude = 0.005 * value.mass;
+      const forceMagnitude = 0.005 * value.mass;
 
       Body.applyForce(value, value.position, {
         x:
