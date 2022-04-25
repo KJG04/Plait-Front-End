@@ -1,9 +1,9 @@
 import * as S from "./styles";
 import Logo from "../../assets/Logo.svg";
 import Image from "next/image";
-import ChevronDown from "../../assets/chevron-down.svg";
 import Member from "../Member";
 import QueueContent from "../QueueContent";
+import { ChevronDown } from "../../assets/icons";
 
 const Aside = () => {
   return (

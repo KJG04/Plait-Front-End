@@ -1,5 +1,5 @@
 const BottomBar = () => {
-  return <div />;
+  return <div>hello world!</div>;
 };
 
 export default BottomBar;
