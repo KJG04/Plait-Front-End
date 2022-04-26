@@ -33,7 +33,8 @@ export const Button = styled.button`
     transform 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
   will-change: opacity, transform;
 
-  &:hover {
+  &:hover,
+  &:focus {
     opacity: 0.5;
   }
 

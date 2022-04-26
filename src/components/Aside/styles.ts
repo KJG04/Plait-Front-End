@@ -36,24 +36,17 @@ export const Leave = styled.button`
   }
 `;
 
-export const MemberHeader = styled.button`
+export const MemberHeader = styled.div`
   padding: 8px 10px;
   border-radius: 10px;
   border: none;
   margin: none;
   display: flex;
   justify-content: space-between;
-  transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
   background-color: transparent;
   color: ${({ theme }) => theme.colors.grayscale.darkWhite};
   align-items: center;
   width: 100%;
-
-  &:hover,
-  &:focus-visible {
-    background-color: ${({ theme }) => theme.colors.grayscale.gray};
-    color: ${({ theme }) => theme.colors.grayscale.white};
-  }
 `;
 
 export const ListContainer = styled.div`
