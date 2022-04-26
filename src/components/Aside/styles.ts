@@ -21,7 +21,7 @@ export const Line = styled.hr`
   margin: 0px 10px;
 `;
 
-export const Leave = styled.button`
+export const TextButton = styled.button`
   padding: none;
   margin: none;
   background-color: transparent;
@@ -62,4 +62,29 @@ export const List = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 16px;
+`;
+
+export const Link = styled.input`
+  padding: 12px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.colors.grayscale.gray};
+  color: ${({ theme }) => theme.colors.grayscale.white};
+  flex: 1;
+`;
+
+export const Copy = styled.button`
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.colors.grayscale.gray};
+  aspect-ratio: 1 / 1;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 16px;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover,
+  &:focus-visible {
+    background-color: ${({ theme }) => theme.colors.grayscale.lightGray};
+  }
 `;
