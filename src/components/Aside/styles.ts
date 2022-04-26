@@ -49,6 +49,10 @@ export const MemberHeader = styled.div`
   width: 100%;
 `;
 
+export const HeaderWrapper = styled(MemberHeader)`
+  padding: 0px 8px;
+`;
+
 export const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -87,4 +91,10 @@ export const Copy = styled.button`
   &:focus-visible {
     background-color: ${({ theme }) => theme.colors.grayscale.lightGray};
   }
+`;
+
+export const InviteContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
 `;
