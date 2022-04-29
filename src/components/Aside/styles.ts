@@ -5,6 +5,7 @@ export const Outer = styled.div`
   height: 100%;
   width: 450px;
   transition: width 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+  will-change: width;
 
   &.close {
     width: 0px;
@@ -101,6 +102,7 @@ export const Copy = styled.button`
   align-items: center;
   margin-left: 16px;
   transition: background-color 0.2s ease-in-out;
+  will-change: background-color;
 
   &:hover,
   &:focus-visible {
@@ -124,6 +126,7 @@ export const ToggleButton = styled.button`
   background-color: ${({ theme }) => theme.colors.grayscale.darkGray};
   opacity: 0;
   transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+  will-change: opacity, left, transform;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.grayscale.gray};
