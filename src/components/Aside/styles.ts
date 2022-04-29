@@ -1,12 +1,19 @@
 import styled from "@emotion/styled";
 
+export const Outer = styled.div`
+  position: relative;
+  height: 100%;
+`;
+
 export const Container = styled.aside`
   padding: 36px 10px 0px 10px;
+  height: 100%;
   background-color: ${({ theme }) => theme.colors.grayscale.darkGray};
   display: flex;
   flex-direction: column;
   row-gap: 16px;
   width: 450px;
+  position: relative;
 `;
 
 export const Header = styled.header`
@@ -97,4 +104,27 @@ export const InviteContainer = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 12px;
+`;
+
+export const ToggleButton = styled.button`
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translateX(-100%);
+  padding: 26px 0px;
+  border-radius: 100px;
+  background-color: ${({ theme }) => theme.colors.grayscale.darkGray};
+  opacity: 0;
+  transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.grayscale.gray};
+  }
+
+  &:focus-visible,
+  &.hover {
+    left: calc(100% + 28px);
+    transform: translateX(0%);
+    opacity: 1;
+  }
 `;
