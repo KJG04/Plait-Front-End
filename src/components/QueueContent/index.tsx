@@ -1,5 +1,6 @@
 import * as S from "./styles";
 import Test from "../../assets/Logo.svg";
+import { memo } from "react";
 
 const QueueContent = () => {
   return (
@@ -24,4 +25,4 @@ const QueueContent = () => {
     </S.Container>
   );
 };
-export default QueueContent;
+export default memo(QueueContent);
