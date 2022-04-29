@@ -140,7 +140,9 @@ export const ToggleButton = styled.button`
   }
 
   & .icon {
-    transform: rotate(180deg);
+    transform: rotate(-180deg);
+    transition: transform 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    will-change: transform;
   }
   &.close .icon {
     transform: rotate(0deg);
