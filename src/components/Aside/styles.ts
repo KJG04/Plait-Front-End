@@ -3,6 +3,12 @@ import styled from "@emotion/styled";
 export const Outer = styled.div`
   position: relative;
   height: 100%;
+  width: 450px;
+  transition: width 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+  &.close {
+    width: 0px;
+  }
 `;
 
 export const Container = styled.aside`
@@ -13,7 +19,9 @@ export const Container = styled.aside`
   flex-direction: column;
   row-gap: 16px;
   width: 450px;
-  position: relative;
+  position: absolute;
+  top: 0px;
+  right: 0px;
 `;
 
 export const Header = styled.header`
@@ -126,5 +134,12 @@ export const ToggleButton = styled.button`
     left: calc(100% + 28px);
     transform: translateX(0%);
     opacity: 1;
+  }
+
+  & .icon {
+    transform: rotate(180deg);
+  }
+  &.close .icon {
+    transform: rotate(0deg);
   }
 `;

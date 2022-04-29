@@ -7,6 +7,7 @@ import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 const Aside = () => {
   const [isHover, setIsHover] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const containerRef = useRef<HTMLElement>(null);
 
   const omMouseMove = useCallback((e: MouseEvent) => {
@@ -26,6 +27,14 @@ const Aside = () => {
     }
   }, []);
 
+  const outerClassName = useMemo(() => (!isOpen ? "close" : ""), [isOpen]);
+  const toggleClassName = useMemo(
+    () => `${isHover ? "hover" : ""} ${outerClassName}`,
+    [isHover, outerClassName],
+  );
+
+  const onToggle = useCallback(() => setIsOpen((prev) => !prev), []);
+
   useEffect(() => {
     window.addEventListener("mousemove", omMouseMove);
 
@@ -34,12 +43,11 @@ const Aside = () => {
     };
   }, [omMouseMove]);
 
-  const className = useMemo(() => (isHover ? "hover" : ""), [isHover]);
-
   return (
-    <S.Outer>
-      <S.ToggleButton className={className}>
+    <S.Outer className={outerClassName}>
+      <S.ToggleButton className={toggleClassName} onClick={onToggle}>
         <Image
+          className="icon"
           src={ChevronRightIcon}
           alt="chevron right"
           layout="fixed"
