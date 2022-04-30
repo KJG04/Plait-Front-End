@@ -1,5 +1,6 @@
 import { memo } from "react";
 import ContentController from "../ContentController";
+import EmojiPickerContainer from "../EmojiPickerContainer";
 import * as S from "./styles";
 
 const BottomBar = () => {
@@ -7,6 +8,7 @@ const BottomBar = () => {
     <S.Container>
       <S.Inner>
         <ContentController />
+        <EmojiPickerContainer />
       </S.Inner>
     </S.Container>
   );

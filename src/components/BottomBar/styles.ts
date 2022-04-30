@@ -13,4 +13,5 @@ export const Inner = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 100%;
+  column-gap: 16px;
 `;
