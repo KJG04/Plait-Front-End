@@ -12,12 +12,15 @@ const EmojiPickerContainer = () => {
   const prevAnim = useRef<gsap.core.Tween | null>(null);
   const emojiRef = useRef<HTMLElement>(null);
 
-  const [index, setIndex] = useState<number>(getRandomIndex());
+  const [index, setIndex] = useState<number>(-1);
   const emoji = useMemo(() => emojis[index], [index]);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const onButtonEnter = useCallback(() => {
     setIndex(getRandomIndex());
   }, [getRandomIndex]);
+
+  const onClick = useCallback(() => setIsOpen((prev) => !prev), []);
 
   useEffect(() => {
     if (emojiRef.current) {
@@ -33,14 +36,22 @@ const EmojiPickerContainer = () => {
     }
   }, [index]);
 
+  useEffect(() => {
+    setIndex(getRandomIndex());
+  }, [getRandomIndex]);
+
   return (
     <S.Container>
-      <S.Button onFocus={onButtonEnter} onMouseEnter={onButtonEnter}>
+      <S.Button
+        onClick={onClick}
+        onFocus={onButtonEnter}
+        onMouseEnter={onButtonEnter}
+      >
         <span ref={emojiRef} role="img" aria-label={emoji}>
           {emoji}
         </span>
       </S.Button>
-      <EmojiPicker />
+      <EmojiPicker isOpen={isOpen} />
     </S.Container>
   );
 };
