@@ -3,6 +3,7 @@ import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import emojis from "../../constant/emojis";
 import EmojiPicker from "../EmojiPicker";
 import * as S from "./styles";
+import OutsideClickHandler from "react-outside-click-handler";
 
 const EmojiPickerContainer = () => {
   const getRandomIndex = useCallback(
@@ -11,6 +12,7 @@ const EmojiPickerContainer = () => {
   );
   const prevAnim = useRef<gsap.core.Tween | null>(null);
   const emojiRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const [index, setIndex] = useState<number>(-1);
   const emoji = useMemo(() => emojis[index], [index]);
@@ -41,18 +43,20 @@ const EmojiPickerContainer = () => {
   }, [getRandomIndex]);
 
   return (
-    <S.Container>
-      <S.Button
-        onClick={onClick}
-        onFocus={onButtonEnter}
-        onMouseEnter={onButtonEnter}
-      >
-        <span ref={emojiRef} role="img" aria-label={emoji}>
-          {emoji}
-        </span>
-      </S.Button>
-      <EmojiPicker isOpen={isOpen} />
-    </S.Container>
+    <OutsideClickHandler onOutsideClick={() => setIsOpen(false)}>
+      <S.Container ref={containerRef}>
+        <S.Button
+          onClick={onClick}
+          onFocus={onButtonEnter}
+          onMouseEnter={onButtonEnter}
+        >
+          <span ref={emojiRef} role="img" aria-label={emoji}>
+            {emoji}
+          </span>
+        </S.Button>
+        <EmojiPicker isOpen={isOpen} />
+      </S.Container>
+    </OutsideClickHandler>
   );
 };
 
