@@ -4,21 +4,21 @@ export class EmojiEvent extends Event {
   emoji: string;
   name: string;
   color: string;
-  xPercent: number;
-  yPercent: number;
+  x: number;
+  y: number;
 
   constructor(
     emoji: string,
     name: string,
     color: string,
-    xPercent: number,
-    yPercent: number,
+    x: number,
+    y: number,
   ) {
     super(emojiEventName);
     this.emoji = emoji;
     this.name = name;
     this.color = color;
-    this.xPercent = xPercent;
-    this.yPercent = yPercent;
+    this.x = x;
+    this.y = y;
   }
 }

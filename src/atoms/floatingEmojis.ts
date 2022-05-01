@@ -2,10 +2,12 @@ import { atom } from "recoil";
 import atomKeys from "../constant/atomkeys";
 
 export interface FloatingEmojiType {
-  xPercent: number;
-  yPercent: number;
+  x: number;
+  y: number;
   emoji: string;
   id: string;
+  color: string;
+  name: string;
 }
 
 const initalState: FloatingEmojiType[] = [];
