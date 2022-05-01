@@ -37,6 +37,18 @@ export const Container = styled.div`
   }
 `;
 
+export const Title = styled.div`
+  font: ${({ theme }) => theme.fonts.subtitle};
+  color: ${({ theme }) => theme.colors.grayscale.white};
+  margin-bottom: 12px;
+`;
+
+export const Description = styled.span`
+  font: ${({ theme }) => theme.fonts.description};
+  color: ${({ theme }) => theme.colors.grayscale.lightGray};
+  margin-left: 12px;
+`;
+
 export const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(8, 1fr);
@@ -44,8 +56,8 @@ export const Grid = styled.div`
   margin-bottom: 12px;
 `;
 
-export const Title = styled.div`
+export const Subtitle = styled.div`
   font: ${({ theme }) => theme.fonts.body2};
-  color: ${({ theme }) => theme.colors.grayscale.lightGray};
+  color: ${({ theme }) => theme.colors.grayscale.darkWhite};
   margin-bottom: 4px;
 `;

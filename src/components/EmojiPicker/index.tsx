@@ -29,13 +29,17 @@ const EmojiPicker: FC<PropsType> = ({ isOpen }) => {
 
   return (
     <S.Container className={containerClassName}>
+      <S.Title>
+        감정표현
+        <S.Description>끌어서 놓기</S.Description>
+      </S.Title>
       {usedEmoji.length > 0 && (
         <>
-          <S.Title>최근 이모지</S.Title>
+          <S.Subtitle>최근 이모지</S.Subtitle>
           <S.Grid>{usedEmoji.map(renderEmojis)}</S.Grid>
         </>
       )}
-      <S.Title>모든 이모지</S.Title>
+      <S.Subtitle>모든 이모지</S.Subtitle>
       <S.Grid>{emojis.map(renderEmojis)}</S.Grid>
     </S.Container>
   );
