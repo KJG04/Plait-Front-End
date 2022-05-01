@@ -1,6 +1,8 @@
+import { useTheme } from "@emotion/react";
 import { FC, memo, useCallback } from "react";
 import { useSetRecoilState } from "recoil";
 import usedEmojiState from "../../atoms/usedEmoji";
+import { EmojiEvent } from "../../constant/emojiEvent";
 import storageKeys from "../../constant/storageKeys";
 import * as S from "./styles";
 
@@ -10,18 +12,29 @@ interface PropsType {
 
 const Emoji: FC<PropsType> = ({ emoji }) => {
   const setUsedEmoji = useSetRecoilState(usedEmojiState);
+  const theme = useTheme();
 
   const onDragEnd = useCallback(
     (e: React.DragEvent) => {
-      console.log(e.clientX, e.clientY);
       setUsedEmoji((prev) => {
         const result = [...new Set([emoji, ...prev])].slice(0, 8);
         localStorage.setItem(storageKeys.usedEmoji, JSON.stringify(result));
 
         return result;
       });
+      const { clientX, clientY } = e;
+
+      const event = new EmojiEvent(
+        emoji,
+        "김진근",
+        theme.colors.primary,
+        clientX,
+        clientY,
+      );
+
+      document.dispatchEvent(event);
     },
-    [emoji, setUsedEmoji],
+    [emoji, setUsedEmoji, theme.colors.primary],
   );
 
   return (
