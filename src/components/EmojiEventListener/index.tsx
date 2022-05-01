@@ -7,7 +7,7 @@ import floatingEmojisState, {
 import { EmojiEvent, emojiEventName } from "../../constant/emojiEvent";
 import FloatingEmoji from "../FloatingEmoji";
 import * as S from "./styles";
-import uuid from "uuid";
+import { v4 } from "uuid";
 
 const EmojiEventListener = () => {
   const [floatingEmojis, setFloatingEmojis] =
@@ -21,9 +21,11 @@ const EmojiEventListener = () => {
 
       const newEmoji: FloatingEmojiType = {
         emoji: e.emoji,
-        id: uuid.v4(),
-        xPercent: e.xPercent,
-        yPercent: e.yPercent,
+        id: v4(),
+        x: e.x,
+        y: e.y,
+        color: e.color,
+        name: e.name,
       };
 
       setFloatingEmojis((prev) => [...prev, newEmoji]);

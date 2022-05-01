@@ -6,4 +6,5 @@ export const Container = styled.div`
   left: 0px;
   width: 100vw;
   height: 100vh;
+  pointer-events: none;
 `;
