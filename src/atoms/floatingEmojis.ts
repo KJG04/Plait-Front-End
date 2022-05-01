@@ -10,9 +10,9 @@ export interface FloatingEmojiType {
 
 const initalState: FloatingEmojiType[] = [];
 
-const floatingEmojis = atom({
+const floatingEmojisState = atom({
   key: atomKeys.floatingEmoji,
   default: initalState,
 });
 
-export default floatingEmojis;
+export default floatingEmojisState;
