@@ -24,6 +24,13 @@ const EmojiPickerContainer = () => {
 
   const onClick = useCallback(() => setIsOpen((prev) => !prev), []);
 
+  const onOutsideClick = useCallback((e: MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    setIsOpen(false);
+  }, []);
+
   useEffect(() => {
     if (emojiRef.current) {
       if (prevAnim.current) {
@@ -43,7 +50,7 @@ const EmojiPickerContainer = () => {
   }, [getRandomIndex]);
 
   return (
-    <OutsideClickHandler onOutsideClick={() => setIsOpen(false)}>
+    <OutsideClickHandler onOutsideClick={onOutsideClick}>
       <S.Container ref={containerRef}>
         <S.Button
           onClick={onClick}
