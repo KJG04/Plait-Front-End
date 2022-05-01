@@ -1,4 +1,4 @@
-import gsap, { Power4 } from "gsap";
+import gsap, { Elastic } from "gsap";
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import emojis from "../../constant/emojis";
 import EmojiPicker from "../EmojiPicker";
@@ -38,8 +38,8 @@ const EmojiPickerContainer = () => {
       } else {
         prevAnim.current = gsap.from(emojiRef.current, {
           scale: 0,
-          duration: 0.5,
-          ease: Power4.easeOut,
+          duration: 1,
+          ease: Elastic.easeOut.config(1, 0.5),
         });
       }
     }
