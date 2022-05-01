@@ -37,8 +37,20 @@ const Emoji: FC<PropsType> = ({ emoji }) => {
     [emoji, setUsedEmoji, theme.colors.primary],
   );
 
+  const onClick = useCallback(() => {
+    const { width, height } = window.screen;
+    const offset = 200;
+
+    const x = offset / 2 + Math.random() * (width - offset);
+    const y = offset / 2 + Math.random() * (height - offset);
+
+    const event = new EmojiEvent(emoji, "김진근", theme.colors.primary, x, y);
+
+    document.dispatchEvent(event);
+  }, [emoji, theme.colors.primary]);
+
   return (
-    <S.Button>
+    <S.Button onClick={onClick}>
       <span role="img" draggable aria-label={emoji} onDragEnd={onDragEnd}>
         {emoji}
       </span>

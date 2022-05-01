@@ -31,7 +31,7 @@ const EmojiPicker: FC<PropsType> = ({ isOpen }) => {
     <S.Container className={containerClassName}>
       <S.Title>
         감정표현
-        <S.Description>끌어서 놓기</S.Description>
+        <S.Description>끌어서 놓기 또는 클릭</S.Description>
       </S.Title>
       {usedEmoji.length > 0 && (
         <>

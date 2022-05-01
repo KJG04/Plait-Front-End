@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 export const Container = styled.div`
   position: absolute;
   transform: translate(-50%, -50%);
+  pointer-events: none;
 `;
 
 export const Emoji = styled.div`
