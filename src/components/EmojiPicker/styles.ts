@@ -11,11 +11,7 @@ export const Container = styled.div`
   transform: translateX(-50%);
   bottom: 40px;
   border-radius: 10px;
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
   overflow: scroll;
-  gap: 8px;
-  flex-wrap: wrap;
   opacity: 1;
   pointer-events: all;
   visibility: visible;
@@ -39,4 +35,17 @@ export const Container = styled.div`
       transform: translateY(5%);
     }
   }
+`;
+
+export const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+`;
+
+export const Title = styled.div`
+  font: ${({ theme }) => theme.fonts.body2};
+  color: ${({ theme }) => theme.colors.grayscale.lightGray};
+  margin-bottom: 4px;
 `;
