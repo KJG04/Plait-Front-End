@@ -1,5 +1,5 @@
 const enum atomKeys {
-  emoji = "emoji",
+  floatingEmoji = "floating-emoji",
   usedEmoji = "used-emoji",
 }
 
