@@ -19,7 +19,7 @@ const Members = () => {
     document.addEventListener("mousemove", onMouseMove);
 
     return () => {
-      document.addEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mousemove", onMouseMove);
     };
   }, [onMouseMove]);
 
