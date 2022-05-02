@@ -1,6 +1,6 @@
 import { memo, useRef } from "react";
 import ContentPicker from "../ContentPicker";
-import ModalPortal, { ModalPortalRef } from "../ModalPortal.tsx";
+import ModalPortal, { ModalPortalRef } from "../ModalPortal";
 import QueueContent from "../QueueContent";
 import * as S from "./styles";
 
