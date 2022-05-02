@@ -1,14 +1,14 @@
-import Document, { Html, Main } from "next/document";
+import { Html, Head, Main, NextScript } from "next/document";
 
-export default class MyDocument extends Document {
-  render() {
-    return (
-      <Html>
-        <body>
-          <Main />
-          <div id="modal" />
-        </body>
-      </Html>
-    );
-  }
+export default function Document() {
+  return (
+    <Html>
+      <Head />
+      <body>
+        <Main />
+        <NextScript />
+        <div id="modal" />
+      </body>
+    </Html>
+  );
 }
