@@ -1,4 +1,3 @@
-import { gql } from "@apollo/client";
 import { Tooltip } from "@nextui-org/react";
 import { TooltipOnVisibleChange } from "@nextui-org/react/types/tooltip/tooltip";
 import { NextPage } from "next";
@@ -6,7 +5,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { Fragment, useState } from "react";
 import ScreenSaver from "../../components/ScreenSaver";
-import apolloClient from "../../utils/apolloClient";
+import { useRoomExists } from "../../queries/Room";
 import * as S from "./styles";
 
 const MainContainer: NextPage = () => {
@@ -15,6 +14,7 @@ const MainContainer: NextPage = () => {
     useState<string>("Enter로 입장하세요.");
   const [tootipColor, setTootipColor] = useState<"invert" | "error">("invert");
   const tooltipVisible = code.trim().length >= 6;
+  const [getRoomIsExists, { loading }] = useRoomExists();
 
   const onCodeChange: React.ChangeEventHandler<HTMLInputElement> = (e) =>
     setCode(e.target.value);
@@ -26,14 +26,18 @@ const MainContainer: NextPage = () => {
     e.preventDefault();
     e.stopPropagation();
 
+    if (loading) {
+      return;
+    }
+
     try {
-      await apolloClient.query({
-        query: gql`
-          query {
-            checkIsRoomExist(roomCode: ${code})
-          }
-        `,
+      const { error } = await getRoomIsExists({
+        variables: { roomCode: code },
       });
+
+      if (error) {
+        throw error;
+      }
     } catch (error) {
       setTootipColor("error");
       setTootipContent("존재하지 않는 방입니다.");
