@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect, useRef } from "react";
+import React, { Fragment, memo, useCallback, useEffect, useRef } from "react";
 import {
   Engine,
   Render,
@@ -41,6 +41,7 @@ const ScreenSaver = () => {
 
   useEffect(() => {
     if (!scene.current || !triangleRef.current) {
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
       return () => {};
     }
 
@@ -82,7 +83,7 @@ const ScreenSaver = () => {
 
     const bodyOptions: IBodyDefinition = {
       restitution: 0.8,
-      friction: 0.01,
+      friction: 0.1,
       frictionAir: 0,
       density: 1,
       isStatic: false,
@@ -117,19 +118,19 @@ const ScreenSaver = () => {
       80,
       [Svg.pathToVertices(triangleRef.current, 5)],
       {
-        density: 1,
+        ...bodyOptions,
         render: {
           fillStyle: theme.colors.primary,
         },
       },
-      true
+      true,
     );
     vertexSets.push(v);
 
     const bodies = [ball, box, ...vertexSets];
 
     bodies.forEach((value) => {
-      var forceMagnitude = 0.005 * value.mass;
+      const forceMagnitude = 0.005 * value.mass;
 
       Body.applyForce(value, value.position, {
         x:
@@ -156,4 +157,4 @@ const ScreenSaver = () => {
   );
 };
 
-export default ScreenSaver;
+export default memo(ScreenSaver);
