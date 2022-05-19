@@ -5,7 +5,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { Fragment, useState } from "react";
 import ScreenSaver from "../../components/ScreenSaver";
-import { useRoomExists } from "../../queries/Room";
+import { useRoomExists } from "../../queries/Main";
 import * as S from "./styles";
 
 const MainContainer: NextPage = () => {
