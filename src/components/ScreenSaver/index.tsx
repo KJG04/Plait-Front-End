@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect, useRef } from "react";
+import React, { Fragment, memo, useCallback, useEffect, useRef } from "react";
 import {
   Engine,
   Render,
@@ -157,4 +157,4 @@ const ScreenSaver = () => {
   );
 };
 
-export default ScreenSaver;
+export default memo(ScreenSaver);
