@@ -21,7 +21,8 @@ export const NameLabel = styled.div`
 export const Button = styled.button`
   background-color: ${({ theme }) => theme.colors.grayscale.gray};
   color: ${({ theme }) => theme.colors.grayscale.white};
-  transition: background-color 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  will-change: color, background-color;
   border-radius: 10px;
   padding: 8px 50px;
   text-align: center;
@@ -31,5 +32,10 @@ export const Button = styled.button`
   &:hover,
   &:focus-visible {
     background-color: ${({ theme }) => theme.colors.primary};
+  }
+
+  &:disabled {
+    background-color: ${({ theme }) => theme.colors.grayscale.darkGray};
+    color: ${({ theme }) => theme.colors.grayscale.lightGray};
   }
 `;

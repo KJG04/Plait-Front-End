@@ -52,15 +52,14 @@ export const Or = styled.div`
   color: ${({ theme }) => theme.colors.grayscale.darkWhite};
 `;
 
-export const NewRoom = styled.div`
-  & a {
-    text-decoration: underline;
-    font: ${({ theme }) => theme.fonts.body2};
-    color: ${({ theme }) => theme.colors.grayscale.darkWhite};
-    text-align: center;
-    transition: color 0.15s ease-in-out;
-  }
-  & a:hover {
+export const NewRoom = styled.button`
+  font: ${({ theme }) => theme.fonts.body2};
+  color: ${({ theme }) => theme.colors.grayscale.darkWhite};
+  text-align: center;
+  transition: color 0.15s ease-in-out;
+  text-decoration: underline;
+
+  &:hover {
     color: ${({ theme }) => theme.colors.grayscale.white};
   }
 `;

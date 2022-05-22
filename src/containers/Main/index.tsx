@@ -1,9 +1,10 @@
+import { ApolloError } from "@apollo/client";
 import { Tooltip } from "@nextui-org/react";
-import { TooltipOnVisibleChange } from "@nextui-org/react/types/tooltip/tooltip";
+import { PersistedQueryNotFoundError } from "apollo-server-errors";
 import { NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { Fragment, useState } from "react";
+import JoinRoomModal from "../../components/JoinRoomModal";
 import ScreenSaver from "../../components/ScreenSaver";
 import { useRoomExists } from "../../queries/Main";
 import * as S from "./styles";
@@ -13,11 +14,18 @@ const MainContainer: NextPage = () => {
   const [tootipContent, setTootipContent] =
     useState<string>("Enter로 입장하세요.");
   const [tootipColor, setTootipColor] = useState<"invert" | "error">("invert");
-  const tooltipVisible = code.trim().length >= 6;
   const [getRoomIsExists, { loading }] = useRoomExists();
+  const [joinModalOpen, setJoinModalOpen] = useState<boolean>(false);
+  const [createModalOpen, setCreateModalOpen] = useState<boolean>(false);
+  const [joiningRoomCode, setJoiningRoomCode] = useState<string | null>(null);
+  const tooltipVisible = code.trim().length > 0;
 
-  const onCodeChange: React.ChangeEventHandler<HTMLInputElement> = (e) =>
+  const onCodeChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    setTootipColor("invert");
+    setTootipContent("Enter로 입장하세요.");
+
     setCode(e.target.value);
+  };
 
   const onKeyDown: React.KeyboardEventHandler<HTMLInputElement> = async (e) => {
     if (e.key !== "Enter") {
@@ -35,19 +43,24 @@ const MainContainer: NextPage = () => {
         variables: { roomCode: code },
       });
 
-      if (error) {
+      if (!!error) {
         throw error;
       }
+
+      setJoiningRoomCode(code);
+      setJoinModalOpen(true);
     } catch (error) {
       setTootipColor("error");
-      setTootipContent("존재하지 않는 방입니다.");
-    }
-  };
+      if (
+        error instanceof ApolloError &&
+        error.graphQLErrors[0].extensions.code ===
+          new PersistedQueryNotFoundError().extensions.code
+      ) {
+        setTootipContent("방이 존재하지 않습니다.");
+        return;
+      }
 
-  const onVisibleChange: TooltipOnVisibleChange = (e) => {
-    if (e) {
-      setTootipColor("invert");
-      setTootipContent("Enter로 입장하세요.");
+      setTootipContent("오류 발생.");
     }
   };
 
@@ -70,13 +83,11 @@ const MainContainer: NextPage = () => {
               color={tootipColor}
               rounded
               placement="bottom"
-              trigger="click"
               visible={tooltipVisible}
-              onVisibleChange={onVisibleChange}
+              initialVisible={tooltipVisible}
             >
               <S.CodeInput
                 maxLength={6}
-                onClick={(e) => e.stopPropagation()}
                 value={code}
                 onChange={onCodeChange}
                 placeholder="코드를 입력해주세요..."
@@ -84,12 +95,17 @@ const MainContainer: NextPage = () => {
               />
             </Tooltip>
             <S.Or>또는</S.Or>
-            <S.NewRoom>
-              <Link href="/">방 생성하기</Link>
-            </S.NewRoom>
+            <S.NewRoom>방 생성하기</S.NewRoom>
           </S.BottomContainer>
         </S.Content>
       </S.Container>
+      {!!joiningRoomCode && (
+        <JoinRoomModal
+          roomCode={joiningRoomCode}
+          open={joinModalOpen}
+          onClose={() => setJoinModalOpen(false)}
+        />
+      )}
     </Fragment>
   );
 };
