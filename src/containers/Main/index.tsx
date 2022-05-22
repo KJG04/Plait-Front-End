@@ -4,10 +4,11 @@ import { PersistedQueryNotFoundError } from "apollo-server-errors";
 import { NextPage } from "next";
 import Head from "next/head";
 import { Fragment, useState } from "react";
-import JoinRoomModal from "../../components/JoinRoomModal";
+import JoinRoomModal from "../../components/SignRoomModal/JoinRoomModal";
 import ScreenSaver from "../../components/ScreenSaver";
 import { useRoomExists } from "../../queries/Main";
 import * as S from "./styles";
+import CreateRoomModal from "../../components/SignRoomModal/CreateRoomModal";
 
 const MainContainer: NextPage = () => {
   const [code, setCode] = useState<string>("");
@@ -64,6 +65,8 @@ const MainContainer: NextPage = () => {
     }
   };
 
+  const onCreateClick = () => setCreateModalOpen(true);
+
   return (
     <Fragment>
       <Head>
@@ -95,7 +98,7 @@ const MainContainer: NextPage = () => {
               />
             </Tooltip>
             <S.Or>또는</S.Or>
-            <S.NewRoom>방 생성하기</S.NewRoom>
+            <S.NewRoom onClick={onCreateClick}>방 생성하기</S.NewRoom>
           </S.BottomContainer>
         </S.Content>
       </S.Container>
@@ -106,6 +109,10 @@ const MainContainer: NextPage = () => {
           onClose={() => setJoinModalOpen(false)}
         />
       )}
+      <CreateRoomModal
+        open={createModalOpen}
+        onClose={() => setCreateModalOpen(false)}
+      />
     </Fragment>
   );
 };
