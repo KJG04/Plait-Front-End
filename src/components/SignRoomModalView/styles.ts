@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import ButtonWithLoading from "../ButtonWithLoading";
 
 export const Title = styled.div`
   font: ${({ theme }) => theme.fonts.heading3};
@@ -18,7 +19,7 @@ export const NameLabel = styled.div`
   margin-bottom: 8px;
 `;
 
-export const Button = styled.button`
+export const Button = styled(ButtonWithLoading)`
   background-color: ${({ theme }) => theme.colors.grayscale.gray};
   color: ${({ theme }) => theme.colors.grayscale.white};
   transition: all 0.2s ease-in-out;

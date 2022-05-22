@@ -1,5 +1,5 @@
 import { useTheme } from "@emotion/react";
-import { Loading, Modal, ModalProps } from "@nextui-org/react";
+import { Modal, ModalProps } from "@nextui-org/react";
 import {
   ButtonHTMLAttributes,
   DetailedHTMLProps,
@@ -30,7 +30,7 @@ const SignRoomModal: FC<SignRoomModalPropsType> = (props) => {
 
   return (
     <Modal
-      css={{ backgroundColor: theme.colors.grayscale.black }}
+      style={{ backgroundColor: theme.colors.grayscale.black }}
       noPadding
       {...modal}
       closeButton
@@ -40,12 +40,8 @@ const SignRoomModal: FC<SignRoomModalPropsType> = (props) => {
         <S.Title>{title}</S.Title>
         <S.NameLabel>이름 (2자 이상 36자 이하)</S.NameLabel>
         <Input {...input} placeholder="이름을 입력해주세요..." maxLength={36} />
-        <S.Button {...button}>
-          {loading ? (
-            <Loading color="white" size="sm" type="points" />
-          ) : (
-            buttonLabel
-          )}
+        <S.Button {...button} loading={loading}>
+          {buttonLabel}
         </S.Button>
       </S.Container>
     </Modal>
