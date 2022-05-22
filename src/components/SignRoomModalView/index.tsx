@@ -25,7 +25,7 @@ export interface SignRoomModalPropsType {
 }
 
 const SignRoomModal: FC<SignRoomModalPropsType> = (props) => {
-  const { modal, input, title, button, loading } = props;
+  const { modal, input, title, button, loading, buttonLabel } = props;
   const theme = useTheme();
 
   return (
@@ -41,8 +41,11 @@ const SignRoomModal: FC<SignRoomModalPropsType> = (props) => {
         <S.NameLabel>이름 (2자 이상 36자 이하)</S.NameLabel>
         <Input {...input} placeholder="이름을 입력해주세요..." maxLength={36} />
         <S.Button {...button}>
-          {loading && <Loading size="sm" />}
-          입장
+          {loading ? (
+            <Loading color="white" size="sm" type="points" />
+          ) : (
+            buttonLabel
+          )}
         </S.Button>
       </S.Container>
     </Modal>

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { FC, memo, useRef, useState } from "react";
+import { FC, memo, useEffect, useRef, useState } from "react";
 import { useSignRoomMutation } from "../../queries/Main";
 import SignRoomModalView, {
   SignRoomModalPropsType,
@@ -44,6 +44,12 @@ const JoinRoomModal: FC<PropsType> = (props) => {
       setName("");
     }
   };
+
+  useEffect(() => {
+    if (open) {
+      setName("");
+    }
+  }, [open]);
 
   const onKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
     if (e.key === "Enter") {

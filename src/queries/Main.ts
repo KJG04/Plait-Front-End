@@ -1,4 +1,4 @@
-import { gql, useLazyQuery, useMutation } from "@apollo/client";
+import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client";
 
 const useRoomExists = () => {
   const query = gql`
@@ -31,4 +31,14 @@ const useSignRoomMutation = () => {
   return { joinMutation, createMutation };
 };
 
-export { useRoomExists, useSignRoomMutation };
+const useActiveUserCount = () => {
+  const activeUser = gql`
+    query {
+      activeUserCount
+    }
+  `;
+
+  return useQuery(activeUser, { pollInterval: 5000 });
+};
+
+export { useRoomExists, useSignRoomMutation, useActiveUserCount };

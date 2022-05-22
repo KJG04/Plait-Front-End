@@ -24,10 +24,14 @@ export const Button = styled.button`
   transition: all 0.2s ease-in-out;
   will-change: color, background-color;
   border-radius: 10px;
-  padding: 8px 50px;
+  padding: 8px 0px;
+  width: 150px;
   text-align: center;
   margin-top: 16px;
   float: right;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover,
   &:focus-visible {

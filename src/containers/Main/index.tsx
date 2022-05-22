@@ -6,7 +6,7 @@ import Head from "next/head";
 import { Fragment, useState } from "react";
 import JoinRoomModal from "../../components/SignRoomModal/JoinRoomModal";
 import ScreenSaver from "../../components/ScreenSaver";
-import { useRoomExists } from "../../queries/Main";
+import { useActiveUserCount, useRoomExists } from "../../queries/Main";
 import * as S from "./styles";
 import CreateRoomModal from "../../components/SignRoomModal/CreateRoomModal";
 
@@ -20,6 +20,7 @@ const MainContainer: NextPage = () => {
   const [createModalOpen, setCreateModalOpen] = useState<boolean>(false);
   const [joiningRoomCode, setJoiningRoomCode] = useState<string | null>(null);
   const tooltipVisible = code.trim().length > 0;
+  const { data } = useActiveUserCount();
 
   const onCodeChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setTootipColor("invert");
@@ -77,7 +78,9 @@ const MainContainer: NextPage = () => {
         <S.Content>
           <S.Title>Plait에 오신걸 환영합니다!</S.Title>
           <S.Subtitle>
-            <div>현재 123명이 Plait을 사용중입니다.</div>
+            <div>
+              현재 {data ? data.activeUserCount : "-"}명이 Plait을 사용중입니다.
+            </div>
             <div>사람들과 실시간으로 음악과 동영상을 공유해보세요.</div>
           </S.Subtitle>
           <S.BottomContainer>

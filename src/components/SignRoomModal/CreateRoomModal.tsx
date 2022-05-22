@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { FC, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { useSignRoomMutation } from "../../queries/Main";
 import SignRoomModalView, {
   SignRoomModalPropsType,
@@ -51,6 +51,12 @@ const CreateRoomModal: FC<PropsType> = (props) => {
       submit();
     }
   };
+
+  useEffect(() => {
+    if (open) {
+      setName("");
+    }
+  }, [open]);
 
   const viewProps: SignRoomModalPropsType = {
     modal: { open, onClose },
