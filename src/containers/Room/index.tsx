@@ -34,10 +34,6 @@ const RoomContainer: NextPage<RoomSSRProps> = (props) => {
     };
   }, [onMouseMove]);
 
-  useEffect(() => {
-    console.log(id);
-  }, [id]);
-
   return (
     <>
       <S.Container>

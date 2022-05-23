@@ -12,11 +12,23 @@ export const getServerSideProps: GetServerSideProps<RoomSSRProps> = async (
   context,
 ) => {
   const { params } = context;
+  const token = context.req.cookies.token;
+  const cookie = `token=${token};`;
+  const id = params?.id;
+
+  if (!!!id || typeof id !== "string") {
+    const redirect: Redirect = {
+      permanent: false,
+      destination: "/",
+    };
+
+    return { redirect };
+  }
 
   try {
     await apolloClient.query({
       query: roomExistsQuery,
-      variables: { roomCode: params?.id },
+      variables: { roomCode: id },
     });
   } catch (error) {
     const redirect: Redirect = { permanent: false, destination: "/404" };
@@ -26,12 +38,17 @@ export const getServerSideProps: GetServerSideProps<RoomSSRProps> = async (
   try {
     await apolloClient.query({
       query: checkCanJoinRoomQuery,
-      variables: { roomCode: params?.id },
+      variables: { roomCode: id },
+      context: {
+        headers: {
+          cookie,
+        },
+      },
     });
   } catch (error) {
     const redirect: Redirect = {
       permanent: false,
-      destination: `/?join=${params?.id}`,
+      destination: `/?join=${id}`,
     };
 
     return { redirect };
