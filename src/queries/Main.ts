@@ -1,13 +1,13 @@
 import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client";
 
-const useRoomExists = () => {
-  const query = gql`
-    query RoomExist($roomCode: String!) {
-      checkIsRoomExist(roomCode: $roomCode)
-    }
-  `;
+export const roomExistsQuery = gql`
+  query RoomExist($roomCode: String!) {
+    checkIsRoomExist(roomCode: $roomCode)
+  }
+`;
 
-  return useLazyQuery(query);
+const useRoomExists = () => {
+  return useLazyQuery(roomExistsQuery);
 };
 
 const useSignRoomMutation = () => {
