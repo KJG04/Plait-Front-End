@@ -85,7 +85,7 @@ const MainContainer: NextPage = () => {
           </S.Subtitle>
           <S.BottomContainer>
             <Tooltip
-              content={tootipContent}
+              content={loading ? "로딩중..." : tootipContent}
               color={tootipColor}
               rounded
               placement="bottom"

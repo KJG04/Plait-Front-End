@@ -17,7 +17,7 @@ const RoomContainer: NextPage = () => {
   const onMouseMove = useCallback(() => {
     if (idleRef.current) {
       clearTimeout(idleRef.current);
-      document.body.style.cursor = "unset";
+      document.body.style.cursor = "default";
     }
 
     idleRef.current = setTimeout(idle, 1500);
