@@ -6,8 +6,15 @@ import EmojiEventListener from "../../components/EmojiEventListener";
 import Members from "../../components/Members";
 import Player from "../../components/Player";
 import * as S from "./styles";
+import PropTypes from "prop-types";
 
-const RoomContainer: NextPage = () => {
+interface SSPProps {
+  id: string;
+  roomExist: boolean;
+}
+
+const RoomContainer: NextPage<SSPProps> = (props) => {
+  const { id } = props;
   const idleRef = useRef<NodeJS.Timeout | null>(null);
 
   const idle = useCallback(() => {
@@ -17,7 +24,7 @@ const RoomContainer: NextPage = () => {
   const onMouseMove = useCallback(() => {
     if (idleRef.current) {
       clearTimeout(idleRef.current);
-      document.body.style.cursor = "unset";
+      document.body.style.cursor = "default";
     }
 
     idleRef.current = setTimeout(idle, 1500);
@@ -30,6 +37,10 @@ const RoomContainer: NextPage = () => {
       document.removeEventListener("mousemove", onMouseMove);
     };
   }, [onMouseMove]);
+
+  useEffect(() => {
+    console.log(id);
+  }, [id]);
 
   return (
     <>
@@ -44,6 +55,10 @@ const RoomContainer: NextPage = () => {
       <EmojiEventListener />
     </>
   );
+};
+
+RoomContainer.propTypes = {
+  id: PropTypes.string.isRequired,
 };
 
 export default RoomContainer;

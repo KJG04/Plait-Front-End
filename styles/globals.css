@@ -147,7 +147,7 @@ button:disabled,
 [type="button"]:disabled,
 [type="reset"]:disabled,
 [type="submit"]:disabled {
-  cursor: default;
+  cursor: not-allowed;
 }
 :-moz-focusring {
   outline: auto;

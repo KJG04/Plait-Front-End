@@ -7,6 +7,8 @@ export const Input = styled.input`
   padding: none;
   background-color: transparent;
   outline: none;
+  display: block;
+  width: 100%;
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.grayscale.lightGray};
