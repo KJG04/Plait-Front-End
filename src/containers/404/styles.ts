@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 export const Container = styled.div`
-  position: absolute;
+  position: relative;
   top: 0px;
   left: 0px;
   width: 100vw;
@@ -10,6 +10,7 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  z-index: 2;
 `;
 
 export const Title = styled.span`
