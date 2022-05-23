@@ -7,13 +7,9 @@ import Members from "../../components/Members";
 import Player from "../../components/Player";
 import * as S from "./styles";
 import PropTypes from "prop-types";
+import { RoomSSRProps } from "../../../pages/[id]";
 
-interface SSPProps {
-  id: string;
-  roomExist: boolean;
-}
-
-const RoomContainer: NextPage<SSPProps> = (props) => {
+const RoomContainer: NextPage<RoomSSRProps> = (props) => {
   const { id } = props;
   const idleRef = useRef<NodeJS.Timeout | null>(null);
 
