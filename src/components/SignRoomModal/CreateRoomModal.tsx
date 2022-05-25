@@ -37,7 +37,7 @@ const CreateRoomModal: FC<PropsType> = (props) => {
         throw errors;
       }
 
-      router.push(`/${data.createRoom.code}`);
+      await router.push(`/${data.createRoom.code}`);
     } catch (error) {
       inputRef.current?.focus();
       setName("");

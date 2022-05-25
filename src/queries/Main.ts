@@ -1,4 +1,5 @@
-import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import { gql, useLazyQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 
 export const roomExistsQuery = gql`
   query RoomExist($roomCode: String!) {

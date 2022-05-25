@@ -35,7 +35,7 @@ const RoomContainer: NextPage<RoomSSRProps> = (props) => {
   }, [onMouseMove]);
 
   return (
-    <>
+    <RecoilRoot>
       <S.Container>
         <S.TopContainer>
           <Aside />
@@ -45,7 +45,7 @@ const RoomContainer: NextPage<RoomSSRProps> = (props) => {
         <Members />
       </S.Container>
       <EmojiEventListener />
-    </>
+    </RecoilRoot>
   );
 };
 
