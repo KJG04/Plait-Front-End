@@ -29,7 +29,9 @@
       "@constant": ["constant/index.ts"],
       "@atoms/*": ["atoms/*"],
       "@atoms": ["atoms/index.ts"],
-      "@assets/*": ["assets/*"]
+      "@assets/*": ["assets/*"],
+      "@images": ["assets/images/index.ts"],
+      "@icons": ["assets/icons/index.ts"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

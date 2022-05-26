@@ -1,11 +1,9 @@
 import React, { memo, useMemo } from "react";
 import { useCallback, useEffect } from "react";
 import { useRecoilState } from "recoil";
-import floatingEmojisState, {
-  FloatingEmojiType,
-} from "../../atoms/floatingEmojis";
-import { EmojiEvent, emojiEventName } from "../../constant/emojiEvent";
-import FloatingEmoji from "../FloatingEmoji";
+import { floatingEmojisState, FloatingEmojiType } from "@atoms";
+import { EmojiEvent, emojiEventName } from "@constant";
+import { FloatingEmoji } from "@components";
 import * as S from "./styles";
 import { v4 } from "uuid";
 

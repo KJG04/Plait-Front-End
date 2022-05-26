@@ -16,5 +16,5 @@ export { default as Player } from "../components/Player";
 export { default as Queue } from "../components/Queue";
 export { default as QueueContent } from "../components/QueueContent";
 export { default as ScreenSaver } from "../components/ScreenSaver";
-export * as default from "../components/SignRoomModal";
+export * from "../components/SignRoomModal";
 export { default as SignRoomModalView } from "../components/SignRoomModalView";

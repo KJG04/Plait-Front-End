@@ -1,7 +1,6 @@
 import { memo, useCallback, useEffect, useState } from "react";
 import * as S from "./styles";
-import SoundCloudLogo from "../../assets/soundcloud.png";
-import YoutubeLogo from "../../assets/youtube.png";
+import { Youtube as YoutubeLogo, SoundCloud as SoundCloudLogo } from "@images";
 import Image from "next/image";
 
 type LinkState = "EMPTY" | "SOUNDCLOUD" | "YOUTUBE" | "ERROR";

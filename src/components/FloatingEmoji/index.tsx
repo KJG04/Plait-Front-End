@@ -1,7 +1,7 @@
 import gsap, { Elastic, Linear, Power4 } from "gsap";
 import { FC, memo, useCallback, useEffect, useRef } from "react";
 import { useSetRecoilState } from "recoil";
-import floatingEmojisState, { FloatingEmojiType } from "@atoms/floatingEmojis";
+import { floatingEmojisState, FloatingEmojiType } from "@atoms";
 import * as S from "./styles";
 
 const FloatingEmoji: FC<FloatingEmojiType> = ({

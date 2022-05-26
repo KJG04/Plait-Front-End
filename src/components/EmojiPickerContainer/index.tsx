@@ -1,6 +1,6 @@
 import gsap, { Elastic } from "gsap";
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import emojis from "@constant/emojis";
+import { emojis } from "@constant";
 import { EmojiPicker } from "@components";
 import * as S from "./styles";
 import OutsideClickHandler from "react-outside-click-handler";

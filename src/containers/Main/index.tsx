@@ -4,12 +4,10 @@ import { PersistedQueryNotFoundError } from "apollo-server-errors";
 import { NextPage } from "next";
 import Head from "next/head";
 import { Fragment, useEffect, useState } from "react";
-import JoinRoomModal from "../../components/SignRoomModal/JoinRoomModal";
-import ScreenSaver from "../../components/ScreenSaver";
-import { useActiveUserCount, useRoomExists } from "../../queries/Main";
-import * as S from "./styles";
-import CreateRoomModal from "../../components/SignRoomModal/CreateRoomModal";
 import { useRouter } from "next/router";
+import { JoinRoomModal, ScreenSaver, CreateRoomModal } from "@components";
+import { useActiveUserCount, useRoomExists } from "@queries";
+import * as S from "./styles";
 
 const MainContainer: NextPage = () => {
   const [code, setCode] = useState<string>("");

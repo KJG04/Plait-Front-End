@@ -1,9 +1,9 @@
 import { FC, memo, useCallback, useEffect, useMemo } from "react";
 import { useRecoilState } from "recoil";
 import { usedEmojiState } from "@atoms";
-import emojis from "@constant/emojis";
-import storageKeys from "@constant/storageKeys";
-import Emoji from "../Emoji";
+import { emojis } from "@constant";
+import { storageKeys } from "@constant";
+import { Emoji } from "@components";
 import * as S from "./styles";
 
 interface PropsType {

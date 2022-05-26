@@ -1,6 +1,6 @@
 import { memo, useCallback, useState } from "react";
 import * as S from "./styles";
-import { NextIcon, PauseIcon, PlayIcon } from "../../assets/icons";
+import { NextIcon, PauseIcon, PlayIcon } from "@icons";
 import Image from "next/image";
 
 const ContentController = () => {

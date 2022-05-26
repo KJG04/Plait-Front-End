@@ -8,7 +8,7 @@ import {
   memo,
   RefAttributes,
 } from "react";
-import Input from "../Input";
+import { Input } from "@components";
 import * as S from "./styles";
 
 export interface SignRoomModalPropsType {

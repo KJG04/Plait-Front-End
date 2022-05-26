@@ -1,5 +1,5 @@
 import * as S from "./styles";
-import Test from "@assets/Logo.svg";
+import { Triangle as Test } from "@images";
 import { memo } from "react";
 
 const QueueContent = () => {

@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import Link from "next/link";
 import { Fragment } from "react";
-import ScreenSaver from "../../components/ScreenSaver";
+import { ScreenSaver } from "@components";
 import * as S from "./styles";
 
 export const Container404: NextPage = () => {

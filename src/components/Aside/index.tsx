@@ -1,9 +1,9 @@
 import * as S from "./styles";
-import Logo from "../../assets/Logo.svg";
+import { Logo } from "@images";
 import Image from "next/image";
-import { ClipIcon, ChevronRightIcon } from "../../assets/icons";
+import { ClipIcon, ChevronRightIcon } from "@icons";
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import Queue from "../Queue";
+import { Queue } from "@components";
 
 const Aside = () => {
   const [isHover, setIsHover] = useState(false);

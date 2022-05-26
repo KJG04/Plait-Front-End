@@ -1,6 +1,5 @@
 import { memo } from "react";
-import ContentController from "../ContentController";
-import EmojiPickerContainer from "../EmojiPickerContainer";
+import { EmojiPickerContainer, ContentController } from "@components";
 import * as S from "./styles";
 
 const BottomBar = () => {
