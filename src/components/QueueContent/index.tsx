@@ -1,5 +1,5 @@
 import * as S from "./styles";
-import Test from "../../assets/Logo.svg";
+import Test from "@assets/Logo.svg";
 import { memo } from "react";
 
 const QueueContent = () => {

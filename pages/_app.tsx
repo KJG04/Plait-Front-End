@@ -4,7 +4,7 @@ import { theme } from "../src/utils/theme";
 import { Toaster } from "react-hot-toast";
 import { ApolloProvider } from "@apollo/client";
 import { AppProps } from "next/app";
-import apolloClient from "../src/utils/apolloClient";
+import apolloClient from "@utils/apolloClient";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

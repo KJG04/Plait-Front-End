@@ -1,17 +1,25 @@
 import { NextPage } from "next";
-import { useCallback, useEffect, useRef } from "react";
-import Aside from "../../components/Aside";
-import BottomBar from "../../components/BottomBar";
-import EmojiEventListener from "../../components/EmojiEventListener";
-import Members from "../../components/Members";
-import Player from "../../components/Player";
-import * as S from "./styles";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import PropTypes from "prop-types";
-import { RoomSSRProps } from "../../../pages/[id]";
+import { RecoilRoot } from "recoil";
+import { RoomSSRProps } from "@pages/[id]";
+import { useAfterListening, useListeningRoom } from "@queries/Room";
+import {
+  Aside,
+  BottomBar,
+  EmojiEventListener,
+  Members,
+  Player,
+} from "@components";
+import * as S from "./styles";
 
 const RoomContainer: NextPage<RoomSSRProps> = (props) => {
   const { id } = props;
   const idleRef = useRef<NodeJS.Timeout | null>(null);
+  const { data } = useListeningRoom(id);
+
+  const [afterListening] = useAfterListening();
+  const isPivot = useMemo(() => (data ? data.listening : false), [data]);
 
   const idle = useCallback(() => {
     document.body.style.cursor = "none";
@@ -30,9 +38,16 @@ const RoomContainer: NextPage<RoomSSRProps> = (props) => {
     document.addEventListener("mousemove", onMouseMove);
 
     return () => {
+      document.body.style.cursor = "default";
       document.removeEventListener("mousemove", onMouseMove);
     };
   }, [onMouseMove]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      afterListening({ variables: { roomCode: id } });
+    }, 1000);
+  }, [afterListening, id]);
 
   return (
     <RecoilRoot>

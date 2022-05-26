@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
 import { FC, useEffect, useRef, useState } from "react";
-import { useSignRoomMutation } from "../../queries/Main";
+import { useSignRoomMutation } from "@queries/Main";
 import SignRoomModalView, {
   SignRoomModalPropsType,
-} from "../SignRoomModalView";
+} from "@components/SignRoomModalView";
 
 interface PropsType {
   open: boolean;

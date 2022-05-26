@@ -14,7 +14,23 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@components": ["components/index.ts"],
+      "@components/*": ["components/*"],
+      "@pages/*": ["../pages/*"],
+      "@utils/*": ["utils/*"],
+      "@containers/*": ["containers/*"],
+      "@containers": ["containers/index.ts"],
+      "@queries/*": ["queries/*"],
+      "@queries": ["queries/index.ts"],
+      "@constant/*": ["constant/*"],
+      "@constant": ["constant/index.ts"],
+      "@atoms/*": ["atoms/*"],
+      "@atoms": ["atoms/index.ts"],
+      "@assets/*": ["assets/*"]
+    }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]

@@ -1,5 +1,5 @@
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
-import Member from "../Member";
+import Member from "@components/Member";
 import * as S from "./styles";
 
 const Members = () => {
