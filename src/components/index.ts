@@ -11,7 +11,6 @@ export { default as FloatingEmoji } from "../components/FloatingEmoji";
 export { default as Input } from "../components/Input";
 export { default as Member } from "../components/Member";
 export { default as Members } from "../components/Members";
-export { default as ModalPortal } from "../components/ModalPortal";
 export { default as Player } from "../components/Player";
 export { default as Queue } from "../components/Queue";
 export { default as QueueContent } from "../components/QueueContent";

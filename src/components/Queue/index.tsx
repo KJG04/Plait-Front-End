@@ -1,23 +1,16 @@
-import { memo, useRef } from "react";
-import { ModalPortalRef } from "@components/ModalPortal";
-import { QueueContent, ContentPicker, ModalPortal } from "@components";
+import { memo, useState } from "react";
+import { QueueContent, ContentPicker } from "@components";
 import * as S from "./styles";
 
 const Queue = () => {
-  const modalRef = useRef<ModalPortalRef>(null);
+  const [open, setOpen] = useState(false);
 
   return (
     <>
       <div>
         <S.MemberHeader>
           <span>대기열</span>
-          <S.TextButton
-            onClick={() => {
-              modalRef.current?.open();
-            }}
-          >
-            추가
-          </S.TextButton>
+          <S.TextButton onClick={() => setOpen(true)}>추가</S.TextButton>
         </S.MemberHeader>
         <S.Line />
       </div>
@@ -27,9 +20,7 @@ const Queue = () => {
         <QueueContent />
         <QueueContent />
       </S.ListContainer>
-      <ModalPortal ref={modalRef}>
-        <ContentPicker />
-      </ModalPortal>
+      <ContentPicker onClose={() => setOpen(false)} open={open} />
     </>
   );
 };
