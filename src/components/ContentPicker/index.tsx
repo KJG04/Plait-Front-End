@@ -97,6 +97,13 @@ const ContentPicker: FC<PropsType> = (props) => {
         backgroundColor: "transparent",
       }}
       preventClose
+      noPadding
+      autoMargin
+      width={
+        ["SOUNDCLOUD", "YOUTUBE"].includes(linkState)
+          ? "calc(60% + 48px)"
+          : "calc(400px + 48px)"
+      }
     >
       <S.Container>
         <S.TitleContainer>
