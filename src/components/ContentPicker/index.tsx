@@ -90,7 +90,11 @@ const ContentPicker: FC<PropsType> = (props) => {
     <Modal
       open={open}
       closeButton
-      onClose={onClose}
+      onClose={() => {
+        setLink("");
+        setLinkState("EMPTY");
+        onClose();
+      }}
       style={{
         textAlign: "left",
         padding: "0",
