@@ -31,7 +31,9 @@
       "@atoms": ["atoms/index.ts"],
       "@assets/*": ["assets/*"],
       "@images": ["assets/images/index.ts"],
-      "@icons": ["assets/icons/index.ts"]
+      "@icons": ["assets/icons/index.ts"],
+      "@types": ["@types/index.ts"],
+      "@types/*": ["@types/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
