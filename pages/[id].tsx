@@ -1,11 +1,12 @@
 import { GetServerSideProps, Redirect } from "next";
-import { RoomContainer } from "../src/containers";
-import { roomExistsQuery } from "../src/queries/Main";
-import { checkCanJoinRoomQuery } from "../src/queries/Room";
-import apolloClient from "../src/utils/apolloClient";
+import { RoomContainer } from "@containers";
+import { checkCanJoinRoomQuery, getRoomQuery, roomExistsQuery } from "@queries";
+import apolloClient from "@utils/apolloClient";
+import { Room } from "@types";
 
 export interface RoomSSRProps {
   id: string;
+  room: Room;
 }
 
 export const getServerSideProps: GetServerSideProps<RoomSSRProps> = async (
@@ -54,11 +55,26 @@ export const getServerSideProps: GetServerSideProps<RoomSSRProps> = async (
     return { redirect };
   }
 
-  return {
-    props: {
-      id: params?.id as string,
-    },
-  };
+  try {
+    const { data } = await apolloClient.query({
+      query: getRoomQuery,
+      variables: { roomCode: id },
+      context: {
+        headers: {
+          cookie,
+        },
+      },
+    });
+    return {
+      props: {
+        id,
+        room: data.room,
+      },
+    };
+  } catch (error) {
+    const redirect: Redirect = { permanent: false, destination: "/500" };
+    return { redirect };
+  }
 };
 
 export default RoomContainer;
