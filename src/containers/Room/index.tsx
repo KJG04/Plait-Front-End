@@ -3,7 +3,6 @@ import { useCallback, useEffect, useMemo, useRef } from "react";
 import PropTypes from "prop-types";
 import { RecoilRoot } from "recoil";
 import { RoomSSRProps } from "@pages/[id]";
-import { useAfterListening, useListeningRoom } from "@queries/Room";
 import {
   Aside,
   BottomBar,
@@ -12,14 +11,18 @@ import {
   Player,
 } from "@components";
 import * as S from "./styles";
+import { useQuery } from "@apollo/react-hooks";
+import { getRoomQuery } from "@queries";
+import { roomContext } from "@contexts";
 
 const RoomContainer: NextPage<RoomSSRProps> = (props) => {
-  const { id } = props;
+  const { id, room } = props;
   const idleRef = useRef<NodeJS.Timeout | null>(null);
-  const { data } = useListeningRoom(id);
-
-  const [afterListening] = useAfterListening();
-  const isPivot = useMemo(() => (data ? data.listening : false), [data]);
+  const { data } = useQuery(getRoomQuery, {
+    variables: { roomCode: id },
+    pollInterval: 1000 * 60,
+  });
+  const contextValue = useMemo(() => data || room, [data, room]);
 
   const idle = useCallback(() => {
     document.body.style.cursor = "none";
@@ -43,23 +46,19 @@ const RoomContainer: NextPage<RoomSSRProps> = (props) => {
     };
   }, [onMouseMove]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      afterListening({ variables: { roomCode: id } });
-    }, 1000);
-  }, [afterListening, id]);
-
   return (
     <RecoilRoot>
-      <S.Container>
-        <S.TopContainer>
-          <Aside />
-          <Player />
-        </S.TopContainer>
-        <BottomBar />
-        <Members />
-      </S.Container>
-      <EmojiEventListener />
+      <roomContext.Provider value={contextValue}>
+        <S.Container>
+          <S.TopContainer>
+            <Aside />
+            <Player />
+          </S.TopContainer>
+          <BottomBar />
+          <Members />
+        </S.Container>
+        <EmojiEventListener />
+      </roomContext.Provider>
     </RecoilRoot>
   );
 };
