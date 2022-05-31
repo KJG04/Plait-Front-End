@@ -17,6 +17,7 @@ const CreateRoomModal: FC<PropsType> = (props) => {
   const [mutate, { loading }] = createMutation;
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+  const [wait, setWait] = useState<boolean>(false);
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) =>
     setName(e.target.value);
@@ -36,8 +37,13 @@ const CreateRoomModal: FC<PropsType> = (props) => {
       if (!!errors) {
         throw errors;
       }
+      setWait(true);
 
-      await router.push(`/${data.createRoom.code}`);
+      setTimeout(() => {
+        console.log(data);
+
+        router.push(`/${data.createRoom.code}`);
+      }, 1000);
     } catch (error) {
       inputRef.current?.focus();
       setName("");
@@ -63,7 +69,7 @@ const CreateRoomModal: FC<PropsType> = (props) => {
     title: "방 생성하기",
     input: { ref: inputRef, value: name, onChange, onKeyDown },
     button: { disabled, onClick: submit },
-    loading,
+    loading: loading || wait,
     buttonLabel: "생성",
   };
 
