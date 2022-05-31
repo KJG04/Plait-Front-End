@@ -1,32 +1,45 @@
-import { gql } from "@apollo/client";
-import { useMutation, useSubscription } from "@apollo/react-hooks";
+import { gql, useMutation, useQuery } from "@apollo/client";
 
-export const checkCanJoinRoomQuery = gql`
+const checkCanJoinRoomQuery = gql`
   query CanJoinRoom($roomCode: String!) {
     checkCanJoinRoom(roomCode: $roomCode)
   }
 `;
 
-const useListeningRoom = (roomCode: string) => {
-  const subQuery = gql`
-    subscription ListeningRoom($roomCode: String!) {
-      listening(roomCode: $roomCode)
+const getRoomQuery = gql`
+  query Room($roomCode: String!) {
+    room(roomCode: $roomCode) {
+      code
+      isPlaying
+      playTime
+      users {
+        uuid
+        name
+        color
+        isListening
+      }
+      contents {
+        uuid
+        contentId
+        contentType
+        user {
+          name
+        }
+      }
     }
-  `;
+  }
+`;
 
-  return useSubscription(subQuery, {
-    variables: { roomCode },
-  });
-};
+const postAliveMutation = gql`
+  mutation AliveInterval($roomCode: String!) {
+    listeningInterval(roomCode: $roomCode)
+  }
+`;
 
-const useAfterListening = () => {
-  const completeMutation = gql`
-    mutation AfterListening($roomCode: String!) {
-      afterListening(roomCode: $roomCode)
-    }
-  `;
+const useRoom = (roomCode: string) =>
+  useQuery(getRoomQuery, { variables: { roomCode }, pollInterval: 1000 * 60 });
 
-  return useMutation(completeMutation);
-};
+const useAlive = (roomCode: string) =>
+  useMutation(postAliveMutation, { variables: { roomCode } });
 
-export { useListeningRoom, useAfterListening };
+export { getRoomQuery, checkCanJoinRoomQuery, useRoom, useAlive };
