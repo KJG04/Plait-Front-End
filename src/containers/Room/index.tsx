@@ -11,18 +11,15 @@ import {
   Player,
 } from "@components";
 import * as S from "./styles";
-import { useQuery } from "@apollo/react-hooks";
-import { getRoomQuery } from "@queries";
+import { useAlive, useRoom } from "@queries";
 import { roomContext } from "@contexts";
 
 const RoomContainer: NextPage<RoomSSRProps> = (props) => {
   const { id, room } = props;
   const idleRef = useRef<NodeJS.Timeout | null>(null);
-  const { data } = useQuery(getRoomQuery, {
-    variables: { roomCode: id },
-    pollInterval: 1000 * 60,
-  });
-  const contextValue = useMemo(() => data || room, [data, room]);
+  const { data } = useRoom(id);
+  const [mutate] = useAlive(id);
+  const contextValue = useMemo(() => data?.room || room, [data, room]);
 
   const idle = useCallback(() => {
     document.body.style.cursor = "none";
@@ -45,6 +42,15 @@ const RoomContainer: NextPage<RoomSSRProps> = (props) => {
       document.removeEventListener("mousemove", onMouseMove);
     };
   }, [onMouseMove]);
+
+  useEffect(() => {
+    mutate();
+    const interval = setInterval(() => mutate(), 1000 * 30);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [mutate]);
 
   return (
     <RecoilRoot>
