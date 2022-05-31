@@ -34,8 +34,12 @@
       "@icons": ["assets/icons/index.ts"],
       "@types": ["@types/index.ts"],
       "@types/*": ["@types/*"],
+      "@stores": ["stores/index.ts"],
+      "@stores/*": ["stores/*"],
       "@contexts": ["contexts/index.ts"],
-      "@contexts/*": ["contexts/*"]
+      "@contexts/*": ["contexts/*"],
+      "@hooks": ["hooks/index.ts"],
+      "@hooks/*": ["hooks/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
