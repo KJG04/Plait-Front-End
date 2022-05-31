@@ -4,11 +4,16 @@ import Image from "next/image";
 import { ClipIcon, ChevronRightIcon } from "@icons";
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Queue } from "@components";
+import { useRoomContext } from "@hooks";
+import toast from "react-hot-toast";
+import { useTheme } from "@emotion/react";
 
 const Aside = () => {
   const [isHover, setIsHover] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
   const containerRef = useRef<HTMLElement>(null);
+  const room = useRoomContext();
+  const theme = useTheme();
 
   const omMouseMove = useCallback((e: MouseEvent) => {
     if (!containerRef.current) {
@@ -34,6 +39,48 @@ const Aside = () => {
   );
 
   const onToggle = useCallback(() => setIsOpen((prev) => !prev), []);
+
+  const copyCode = async (text: string) => {
+    try {
+      await window.navigator.clipboard.writeText(text);
+
+      toast.success("코드가 복사되었습니다.", {
+        iconTheme: {
+          primary: theme.colors.primary,
+          secondary: theme.colors.grayscale.darkGray,
+        },
+        style: {
+          backgroundColor: theme.colors.grayscale.darkGray,
+          color: theme.colors.grayscale.white,
+        },
+      });
+    } catch (error) {
+      toast.error("코드 복사에 실패하였습니다.", {
+        iconTheme: {
+          primary: theme.colors.error,
+          secondary: theme.colors.grayscale.white,
+        },
+        style: {
+          backgroundColor: theme.colors.grayscale.darkGray,
+          color: theme.colors.grayscale.white,
+        },
+      });
+    }
+  };
+
+  const onCodeClick = () => {
+    if (!room) {
+      return;
+    }
+
+    copyCode(room.code);
+  };
+
+  const inviteMessage = `링크나 코드를 사용하여 Plait에 참가하세요!\n코드: ${room?.code}\n초대 링크: http://localhost:3000?join=${room?.code}`;
+
+  const onInviteClick = () => {
+    copyCode(inviteMessage.trim());
+  };
 
   useEffect(() => {
     window.addEventListener("mousemove", omMouseMove);
@@ -65,16 +112,14 @@ const Aside = () => {
           <S.InviteContainer>
             <S.MemberHeader>
               <span>코드</span>
-              <S.TextButton>GHRJQK</S.TextButton>
+              <S.TextButton onClick={onCodeClick}>{room?.code}</S.TextButton>
             </S.MemberHeader>
             <S.HeaderWrapper>
               <S.Link
                 readOnly
-                defaultValue="
-        https://www.google.com/search?q=css+Range+Slider&oq=css+Range+Slider&aqs=chrome..69i57j69i64j69i61.1092j0j7&sourceid=chrome&ie=UTF-8&safe=active&ssui=on
-      "
+                defaultValue={`http://localhost:3000?join=${room?.code}`}
               />
-              <S.Copy>
+              <S.Copy onClick={onInviteClick}>
                 <Image src={ClipIcon} alt="copy" />
               </S.Copy>
             </S.HeaderWrapper>
