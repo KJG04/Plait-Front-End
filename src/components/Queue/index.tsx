@@ -1,9 +1,19 @@
-import { memo, useState } from "react";
+import { memo, useMemo, useState } from "react";
 import { QueueContent, ContentPicker } from "@components";
+import { useRoomContext } from "@hooks";
 import * as S from "./styles";
 
 const Queue = () => {
   const [open, setOpen] = useState(false);
+  const room = useRoomContext();
+
+  const renderQueue = useMemo(
+    () =>
+      room?.contents.map((value) => {
+        return <QueueContent data={value} key={value.uuid} />;
+      }),
+    [room],
+  );
 
   return (
     <>
@@ -14,12 +24,7 @@ const Queue = () => {
         </S.MemberHeader>
         <S.Line />
       </div>
-      <S.ListContainer>
-        <QueueContent />
-        <QueueContent />
-        <QueueContent />
-        <QueueContent />
-      </S.ListContainer>
+      <S.ListContainer>{renderQueue}</S.ListContainer>
       <ContentPicker onClose={() => setOpen(false)} open={open} />
     </>
   );

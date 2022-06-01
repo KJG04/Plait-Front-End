@@ -1,24 +1,33 @@
 import * as S from "./styles";
-import { Triangle as Test } from "@images";
-import { memo } from "react";
+import { FC, memo } from "react";
+import { Content, ContentType } from "@types";
+import { useYoutubeContentDetail } from "@queries";
 
-const QueueContent = () => {
+interface PropsType {
+  data: Content;
+}
+
+const QueueContent: FC<PropsType> = (props) => {
+  const { data } = props;
+  const { data: d } = useYoutubeContentDetail(data.contentId);
+
   return (
     <S.Container>
-      <S.Img width={100} height={100} src={Test} objectFit="cover" />
+      {data.contentType === ContentType.YOUTUBE && (
+        <S.Img
+          width={100}
+          height={100}
+          src={`https://img.youtube.com/vi/${data.contentId}/maxresdefault.jpg`}
+          objectFit="cover"
+        />
+      )}
       <S.ContentContainer>
         <S.Header>
-          <S.Title>
-            국민의 모든 자유와 권리는 국가안전보장·질서유지 또는 공공복리를
-            위하여 필요한 경우에 한하여 법률로써 제한할 수 있...
-          </S.Title>
-          <S.Content>
-            국민의 모든 자유와 권리는 국가안전보장·질서유지 또는 공공복리를
-            위하여 필요한 경우에 한하여 법률로써 제한할 수 있...
-          </S.Content>
+          <S.Title>{d?.data.items[0].snippet.title}</S.Title>
+          <S.Content>{d?.data.items[0].snippet.description}</S.Content>
         </S.Header>
         <S.Footer>
-          <S.Name>rlawlsrms</S.Name>
+          <S.Name>{data.user.name}</S.Name>
           <S.Playing>현재 재생중</S.Playing>
         </S.Footer>
       </S.ContentContainer>

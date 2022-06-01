@@ -1,4 +1,4 @@
 export const enum ContentType {
-  YOUTUBE,
-  SOUNDCLOUD,
+  YOUTUBE = "YOUTUBE",
+  SOUNDCLOUD = "SOUNDCLOUD",
 }

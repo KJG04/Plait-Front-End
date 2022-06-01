@@ -33,6 +33,7 @@
     "react-hint": "^3.2.1",
     "react-hot-toast": "^2.2.0",
     "react-outside-click-handler": "^1.3.0",
+    "react-query": "^3.39.1",
     "recoil": "^0.7.2",
     "socket.io": "^4.4.1",
     "subscriptions-transport-ws": "^0.11.0",
