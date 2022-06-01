@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { FC, useEffect, useRef, useState } from "react";
-import { useSignRoomMutation } from "@queries/Main";
+import { useSignRoomMutation } from "@queries/main";
 import SignRoomModalView, {
   SignRoomModalPropsType,
 } from "@components/SignRoomModalView";
