@@ -39,7 +39,9 @@
       "@contexts": ["contexts/index.ts"],
       "@contexts/*": ["contexts/*"],
       "@hooks": ["hooks/index.ts"],
-      "@hooks/*": ["hooks/*"]
+      "@hooks/*": ["hooks/*"],
+      "@apis": ["apis/index.ts"],
+      "@apis/*": ["apis/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
