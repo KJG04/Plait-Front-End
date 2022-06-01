@@ -1,7 +1,10 @@
-interface Content {
+import { ContentType } from "@types";
+
+export interface Content {
   uuid: string;
   contentId: string;
-  contentType: string;
+  contentType: ContentType;
+  user: {
+    name: string;
+  };
 }
-
-export default Content;
