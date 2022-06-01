@@ -9,8 +9,10 @@ const Queue = () => {
 
   const renderQueue = useMemo(
     () =>
-      room?.contents.map((value) => {
-        return <QueueContent data={value} key={value.uuid} />;
+      room?.contents.map((value, index) => {
+        return (
+          <QueueContent isPlaying={index === 0} data={value} key={value.uuid} />
+        );
       }),
     [room],
   );

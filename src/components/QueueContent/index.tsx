@@ -1,37 +1,24 @@
-import * as S from "./styles";
 import { FC, memo } from "react";
 import { Content, ContentType } from "@types";
-import { useYoutubeContentDetail } from "@queries";
+import YoutubeContent from "./YoutubeContent";
+import SoundCloudContent from "./SoundCloudContent";
 
 interface PropsType {
   data: Content;
+  isPlaying: boolean;
 }
 
 const QueueContent: FC<PropsType> = (props) => {
-  const { data } = props;
-  const { data: d } = useYoutubeContentDetail(data.contentId);
+  const { data, isPlaying } = props;
 
-  return (
-    <S.Container>
-      {data.contentType === ContentType.YOUTUBE && (
-        <S.Img
-          width={100}
-          height={100}
-          src={`https://img.youtube.com/vi/${data.contentId}/maxresdefault.jpg`}
-          objectFit="cover"
-        />
-      )}
-      <S.ContentContainer>
-        <S.Header>
-          <S.Title>{d?.data.items[0].snippet.title}</S.Title>
-          <S.Content>{d?.data.items[0].snippet.description}</S.Content>
-        </S.Header>
-        <S.Footer>
-          <S.Name>{data.user.name}</S.Name>
-          <S.Playing>현재 재생중</S.Playing>
-        </S.Footer>
-      </S.ContentContainer>
-    </S.Container>
-  );
+  if (data.contentType === ContentType.YOUTUBE) {
+    return <YoutubeContent isPlaying={isPlaying} data={data} />;
+  }
+
+  if (data.contentType === ContentType.SOUNDCLOUD) {
+    return <SoundCloudContent />;
+  }
+
+  return <></>;
 };
 export default memo(QueueContent);
