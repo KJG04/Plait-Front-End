@@ -1,2 +1,3 @@
-export * from "./Main";
-export * from "./Room";
+export * from "./main";
+export * from "./room";
+export * from "./content";
