@@ -1,4 +1,4 @@
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { gql, useMutation, useQuery, useSubscription } from "@apollo/client";
 
 const checkCanJoinRoomQuery = gql`
   query CanJoinRoom($roomCode: String!) {
@@ -36,10 +36,67 @@ const postAliveMutation = gql`
   }
 `;
 
+const subscriptionRoom = gql`
+  subscription SubscriptionRoom($roomCode: String!) {
+    room(roomCode: $roomCode) {
+      code
+      isPlaying
+      playTime
+      users {
+        uuid
+        name
+        color
+        isListening
+      }
+      contents {
+        uuid
+        contentId
+        contentType
+        user {
+          name
+        }
+      }
+    }
+  }
+`;
+
 const useRoom = (roomCode: string) =>
   useQuery(getRoomQuery, { variables: { roomCode }, pollInterval: 1000 * 60 });
 
 const useAlive = (roomCode: string) =>
   useMutation(postAliveMutation, { variables: { roomCode } });
 
-export { getRoomQuery, checkCanJoinRoomQuery, useRoom, useAlive };
+const useRoomSubscription = (roomCode: string) =>
+  useSubscription(subscriptionRoom, { variables: { roomCode } });
+
+const addContentMutation = gql`
+  mutation AddContent(
+    $roomCode: String!
+    $contentId: String!
+    $type: ContentType!
+  ) {
+    addContent(roomCode: $roomCode, contentId: $contentId, type: $type)
+  }
+`;
+
+const deleteContentMutation = gql`
+  mutation DeleteContent($roomCode: String!, $uuid: String!) {
+    deleteContent(roomCode: $roomCode, uuid: $uuid)
+  }
+`;
+
+const useContentMutation = () => {
+  const addContent = useMutation(addContentMutation);
+  const deleteContent = useMutation(deleteContentMutation);
+
+  return { addContent, deleteContent };
+};
+
+export {
+  getRoomQuery,
+  checkCanJoinRoomQuery,
+  useRoom,
+  useAlive,
+  useRoomSubscription,
+  useContentMutation,
+};

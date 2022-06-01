@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { RecoilRoot } from "recoil";
 import { RoomSSRProps } from "@pages/[id]";
@@ -11,7 +11,7 @@ import {
   Player,
 } from "@components";
 import * as S from "./styles";
-import { useAlive, useRoom } from "@queries";
+import { useAlive, useRoom, useRoomSubscription } from "@queries";
 import { roomContext } from "@contexts";
 
 const RoomContainer: NextPage<RoomSSRProps> = (props) => {
@@ -19,7 +19,8 @@ const RoomContainer: NextPage<RoomSSRProps> = (props) => {
   const idleRef = useRef<NodeJS.Timeout | null>(null);
   const { data } = useRoom(id);
   const [mutate] = useAlive(id);
-  const contextValue = useMemo(() => data?.room || room, [data, room]);
+  const [contextValue, setContextValue] = useState(room);
+  const { data: sData } = useRoomSubscription(id);
 
   const idle = useCallback(() => {
     document.body.style.cursor = "none";
@@ -51,6 +52,18 @@ const RoomContainer: NextPage<RoomSSRProps> = (props) => {
       clearInterval(interval);
     };
   }, [mutate]);
+
+  useEffect(() => {
+    if (data?.room) {
+      setContextValue(data.room);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (sData) {
+      setContextValue(sData.room);
+    }
+  }, [sData]);
 
   return (
     <RecoilRoot>
