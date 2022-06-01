@@ -1,5 +1,5 @@
 import { queryKeys } from "@constant";
-import { getYoutubeContentDetail } from "api/youtube";
+import { getYoutubeContentDetail } from "@apis";
 import { useQuery } from "react-query";
 
 const useYoutubeContentDetail = (id: string) =>
