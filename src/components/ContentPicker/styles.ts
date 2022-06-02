@@ -72,12 +72,18 @@ export const Button = styled(ButtonWithLoading)`
   align-items: center;
   display: flex;
   justify-content: center;
-  column-gap: 12px;
 
   &:hover,
   &:focus-visible {
     background-color: ${({ theme }) => theme.colors.grayscale.gray};
   }
+`;
+
+export const ButtonInner = styled.div`
+  display: flex;
+  justify-content: center;
+  column-gap: 12px;
+  align-items: center;
 `;
 
 export const TitleContainer = styled.div`

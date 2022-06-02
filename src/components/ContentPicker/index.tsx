@@ -103,25 +103,27 @@ const ContentPicker: FC<PropsType> = (props) => {
               loading={loading}
               disabled={loading}
             >
-              {linkState === ContentType.YOUTUBE && (
-                <Image
-                  src={YoutubeLogo}
-                  alt="youtube"
-                  height={30}
-                  width={60}
-                  objectFit="contain"
-                />
-              )}
-              {linkState === ContentType.TWITCH && (
-                <Image
-                  src={TwitchLogo}
-                  alt="twitch"
-                  height={30}
-                  width={30}
-                  objectFit="contain"
-                />
-              )}
-              <span>추가하기</span>
+              <S.ButtonInner>
+                {linkState === ContentType.YOUTUBE && (
+                  <Image
+                    src={YoutubeLogo}
+                    alt="youtube"
+                    height={30}
+                    width={60}
+                    objectFit="contain"
+                  />
+                )}
+                {linkState === ContentType.TWITCH && (
+                  <Image
+                    src={TwitchLogo}
+                    alt="twitch"
+                    height={30}
+                    width={30}
+                    objectFit="contain"
+                  />
+                )}
+                <span>추가하기</span>
+              </S.ButtonInner>
             </S.Button>
           )}
         </S.TitleContainer>
