@@ -4,7 +4,7 @@ import { Youtube as YoutubeLogo } from "@images";
 import Image from "next/image";
 import { Modal } from "@nextui-org/react";
 
-type LinkState = "EMPTY" | "YOUTUBE" | "ERROR";
+type LinkState = "EMPTY" | "YOUTUBE" | "TWITCH" | "ERROR";
 
 interface PropsType {
   open: boolean;
@@ -15,7 +15,7 @@ const ContentPicker: FC<PropsType> = (props) => {
   const { open, onClose } = props;
   const [link, setLink] = useState<string>("");
   const [linkState, setLinkState] = useState<LinkState>("EMPTY");
-  const [youtubeId, setYoutubeId] = useState<string | null>(null);
+  const [contentId, setContentId] = useState<string | null>(null);
 
   const getContent = useCallback(() => {
     if (link.length <= 0) {
@@ -28,14 +28,28 @@ const ContentPicker: FC<PropsType> = (props) => {
     const match = link.match(regExp);
     const id = match && match[7].length == 11 ? match[7] : false;
 
-    if (id === false) {
-      setYoutubeId(null);
-      setLinkState("ERROR");
+    if (id) {
+      setContentId(id);
+      setLinkState("YOUTUBE");
       return;
     }
 
-    setYoutubeId(id);
-    setLinkState("YOUTUBE");
+    if (link.startsWith("https://www.twitch.tv/")) {
+      const url = new URL(link);
+
+      const paths = url.pathname
+        .trim()
+        .split("/")
+        .filter((value) => value.length > 0);
+
+      if (paths.length > 0) {
+        setContentId(paths[0]);
+        setLinkState("TWITCH");
+        return;
+      }
+    }
+    setContentId(null);
+    setLinkState("ERROR");
   }, [link]);
 
   useEffect(() => {
@@ -91,7 +105,7 @@ const ContentPicker: FC<PropsType> = (props) => {
           <S.Error>유효한 링크를 입력해주세요.</S.Error>
         )}
         {linkState === "YOUTUBE" && (
-          <S.Youtube src={`https://www.youtube.com/embed/${youtubeId}`} />
+          <S.Youtube src={`https://www.youtube.com/embed/${contentId}`} />
         )}
       </S.Container>
     </Modal>
