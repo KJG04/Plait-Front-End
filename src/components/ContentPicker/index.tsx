@@ -1,6 +1,6 @@
 import { FC, memo, useCallback, useEffect, useState } from "react";
 import * as S from "./styles";
-import { Youtube as YoutubeLogo } from "@images";
+import { Youtube as YoutubeLogo, Twitch as TwitchLogo } from "@images";
 import Image from "next/image";
 import { Modal } from "@nextui-org/react";
 
@@ -52,6 +52,14 @@ const ContentPicker: FC<PropsType> = (props) => {
     setLinkState("ERROR");
   }, [link]);
 
+  const onModalClose = () => {
+    setLink("");
+    setLinkState("EMPTY");
+  };
+
+  const onLinkChange: React.ChangeEventHandler<HTMLInputElement> = (e) =>
+    setLink(e.target.value);
+
   useEffect(() => {
     getContent();
   }, [getContent]);
@@ -61,10 +69,7 @@ const ContentPicker: FC<PropsType> = (props) => {
       open={open}
       closeButton
       onClose={onClose}
-      onOpen={() => {
-        setLink("");
-        setLinkState("EMPTY");
-      }}
+      onOpen={onModalClose}
       style={{
         textAlign: "left",
         padding: "0",
@@ -82,7 +87,7 @@ const ContentPicker: FC<PropsType> = (props) => {
       <S.Container>
         <S.TitleContainer>
           <S.Title>컨텐츠 추가</S.Title>
-          {linkState === "YOUTUBE" && (
+          {["YOUTUBE", "TWITCH"].includes(linkState) && (
             <S.Button>
               {linkState === "YOUTUBE" && (
                 <Image
@@ -93,6 +98,15 @@ const ContentPicker: FC<PropsType> = (props) => {
                   objectFit="contain"
                 />
               )}
+              {linkState === "TWITCH" && (
+                <Image
+                  src={TwitchLogo}
+                  alt="twitch"
+                  height={30}
+                  width={30}
+                  objectFit="contain"
+                />
+              )}
               <span>추가하기</span>
             </S.Button>
           )}
@@ -100,7 +114,7 @@ const ContentPicker: FC<PropsType> = (props) => {
         <S.Subtitle>링크 입력</S.Subtitle>
         <S.LinkInput
           value={link}
-          onChange={(e) => setLink(e.target.value)}
+          onChange={onLinkChange}
           placeholder="링크를 입력해주세요..."
         />
         {linkState === "ERROR" && (
