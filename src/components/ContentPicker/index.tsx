@@ -3,19 +3,23 @@ import * as S from "./styles";
 import { Youtube as YoutubeLogo, Twitch as TwitchLogo } from "@images";
 import Image from "next/image";
 import { Modal } from "@nextui-org/react";
+import { useAddContentMutation } from "@queries/content";
+import { ContentType } from "@types";
 
-type LinkState = "EMPTY" | "YOUTUBE" | "TWITCH" | "ERROR";
+type LinkState = "EMPTY" | ContentType | "ERROR";
 
 interface PropsType {
   open: boolean;
   onClose: () => void;
+  id: string;
 }
 
 const ContentPicker: FC<PropsType> = (props) => {
-  const { open, onClose } = props;
+  const { open, onClose, id } = props;
   const [link, setLink] = useState<string>("");
   const [linkState, setLinkState] = useState<LinkState>("EMPTY");
   const [contentId, setContentId] = useState<string | null>(null);
+  const [mutate, { loading }] = useAddContentMutation();
 
   const getContent = useCallback(() => {
     if (link.length <= 0) {
@@ -30,7 +34,7 @@ const ContentPicker: FC<PropsType> = (props) => {
 
     if (id) {
       setContentId(id);
-      setLinkState("YOUTUBE");
+      setLinkState(ContentType.YOUTUBE);
       return;
     }
 
@@ -44,7 +48,7 @@ const ContentPicker: FC<PropsType> = (props) => {
 
       if (paths.length > 0) {
         setContentId(paths[0]);
-        setLinkState("TWITCH");
+        setLinkState(ContentType.TWITCH);
         return;
       }
     }
@@ -59,6 +63,16 @@ const ContentPicker: FC<PropsType> = (props) => {
 
   const onLinkChange: React.ChangeEventHandler<HTMLInputElement> = (e) =>
     setLink(e.target.value);
+
+  const isContent =
+    ContentType.TWITCH === linkState || ContentType.YOUTUBE === linkState;
+
+  const onAddButtonClick = async () => {
+    if (isContent) {
+      await mutate({ variables: { roomCode: id, contentId, type: linkState } });
+      onClose();
+    }
+  };
 
   useEffect(() => {
     getContent();
@@ -78,18 +92,18 @@ const ContentPicker: FC<PropsType> = (props) => {
       preventClose
       noPadding
       autoMargin
-      width={
-        ["YOUTUBE", "TWITCH"].includes(linkState)
-          ? "calc(60% + 48px)"
-          : "calc(400px + 48px)"
-      }
+      width={isContent ? "calc(60% + 48px)" : "calc(400px + 48px)"}
     >
       <S.Container>
         <S.TitleContainer>
           <S.Title>컨텐츠 추가</S.Title>
-          {["YOUTUBE", "TWITCH"].includes(linkState) && (
-            <S.Button>
-              {linkState === "YOUTUBE" && (
+          {isContent && (
+            <S.Button
+              onClick={onAddButtonClick}
+              loading={loading}
+              disabled={loading}
+            >
+              {linkState === ContentType.YOUTUBE && (
                 <Image
                   src={YoutubeLogo}
                   alt="youtube"
@@ -98,7 +112,7 @@ const ContentPicker: FC<PropsType> = (props) => {
                   objectFit="contain"
                 />
               )}
-              {linkState === "TWITCH" && (
+              {linkState === ContentType.TWITCH && (
                 <Image
                   src={TwitchLogo}
                   alt="twitch"

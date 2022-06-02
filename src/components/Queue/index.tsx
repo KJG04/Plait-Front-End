@@ -35,7 +35,13 @@ const Queue = () => {
           </S.Message>
         )}
       </S.ListContainer>
-      <ContentPicker onClose={() => setOpen(false)} open={open} />
+      {room && (
+        <ContentPicker
+          id={room.code}
+          onClose={() => setOpen(false)}
+          open={open}
+        />
+      )}
     </>
   );
 };

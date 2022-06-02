@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import Input from "../Input";
 import { TwitchPlayer } from "react-twitch-embed";
+import ButtonWithLoading from "@components/ButtonWithLoading";
 
 export const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.grayscale.black};
@@ -61,7 +62,7 @@ export const Twitch = styled(TwitchPlayer)`
   display: block;
 `;
 
-export const Button = styled.button`
+export const Button = styled(ButtonWithLoading)`
   background-color: ${({ theme }) => theme.colors.grayscale.darkGray};
   border-radius: 10px;
   padding: 8px;
