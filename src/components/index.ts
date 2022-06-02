@@ -14,6 +14,8 @@ export { default as Members } from "../components/Members";
 export { default as Player } from "../components/Player";
 export { default as Queue } from "../components/Queue";
 export { default as QueueContent } from "../components/QueueContent";
+export { default as QueueContentSkeleton } from "../components/QueueContentSkeleton";
+export { default as QueueContentView } from "../components/QueueContentView";
 export { default as ScreenSaver } from "../components/ScreenSaver";
 export * from "../components/SignRoomModal";
 export { default as SignRoomModalView } from "../components/SignRoomModalView";
