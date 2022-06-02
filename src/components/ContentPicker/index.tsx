@@ -74,7 +74,9 @@ const ContentPicker: FC<PropsType> = (props) => {
       noPadding
       autoMargin
       width={
-        linkState === "YOUTUBE" ? "calc(60% + 48px)" : "calc(400px + 48px)"
+        ["YOUTUBE", "TWITCH"].includes(linkState)
+          ? "calc(60% + 48px)"
+          : "calc(400px + 48px)"
       }
     >
       <S.Container>
@@ -105,7 +107,17 @@ const ContentPicker: FC<PropsType> = (props) => {
           <S.Error>유효한 링크를 입력해주세요.</S.Error>
         )}
         {linkState === "YOUTUBE" && (
-          <S.Youtube src={`https://www.youtube.com/embed/${contentId}`} />
+          <S.Iframe src={`https://www.youtube.com/embed/${contentId}`} />
+        )}
+        {linkState === "TWITCH" && contentId && (
+          <S.Twitch
+            channel={contentId}
+            hideControls
+            parent={["localhost"]}
+            allowFullscreen={false}
+            width="100%"
+            height="100%"
+          />
         )}
       </S.Container>
     </Modal>

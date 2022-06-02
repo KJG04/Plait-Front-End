@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import Input from "../Input";
+import { TwitchPlayer } from "react-twitch-embed";
 
 export const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.grayscale.black};
@@ -43,12 +44,21 @@ export const Error = styled.div`
   text-align: center;
 `;
 
-export const Youtube = styled.iframe`
+export const Iframe = styled.iframe`
   width: 100%;
   aspect-ratio: 16 / 9;
   border-radius: 10px;
   margin-top: 16px;
   width: 60vw;
+`;
+
+export const Twitch = styled(TwitchPlayer)`
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  margin-top: 16px;
+  width: 60vw;
+  display: block;
 `;
 
 export const Button = styled.button`
