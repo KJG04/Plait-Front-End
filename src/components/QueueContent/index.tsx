@@ -2,6 +2,7 @@ import { FC, memo } from "react";
 import { Content } from "@types";
 import { useYoutubeContentDetail } from "@queries";
 import * as S from "./styles";
+import QueueContentSkeleton from "@components/QueueContentSkeleton";
 
 interface PropsType {
   data: Content;
@@ -14,8 +15,16 @@ const QueueContent: FC<PropsType> = (props) => {
 
   const { data, isLoading, isError } = useYoutubeContentDetail(contentId);
 
-  if (isLoading || isError || !data) {
+  if (isLoading) {
+    return <QueueContentSkeleton />;
+  }
+
+  if (isError) {
     return <></>;
+  }
+
+  if (!data) {
+    return <QueueContentSkeleton />;
   }
 
   return (
