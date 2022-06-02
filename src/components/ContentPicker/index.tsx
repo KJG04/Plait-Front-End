@@ -23,28 +23,19 @@ const ContentPicker: FC<PropsType> = (props) => {
       return;
     }
 
-    if (link.includes("youtube")) {
-      try {
-        const src = new URL(link);
+    const regExp =
+      /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+    const match = link.match(regExp);
+    const id = match && match[7].length == 11 ? match[7] : false;
 
-        const id = src.searchParams.get("v");
-        console.log(id);
-
-        if (id === null) {
-          setLinkState("ERROR");
-          return;
-        }
-
-        setYoutubeId(id);
-        setLinkState("YOUTUBE");
-        console.log(id);
-      } catch (error) {
-        setLinkState("ERROR");
-      }
+    if (id === false) {
+      setYoutubeId(null);
+      setLinkState("ERROR");
       return;
     }
 
-    setLinkState("ERROR");
+    setYoutubeId(id);
+    setLinkState("YOUTUBE");
   }, [link]);
 
   useEffect(() => {
@@ -55,10 +46,10 @@ const ContentPicker: FC<PropsType> = (props) => {
     <Modal
       open={open}
       closeButton
-      onClose={() => {
+      onClose={onClose}
+      onOpen={() => {
         setLink("");
         setLinkState("EMPTY");
-        onClose();
       }}
       style={{
         textAlign: "left",
