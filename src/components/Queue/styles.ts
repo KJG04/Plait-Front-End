@@ -41,3 +41,9 @@ export const Line = styled.hr`
   color: ${({ theme }) => theme.colors.grayscale.gray};
   margin: 0px 10px;
 `;
+
+export const Message = styled.div`
+  text-align: center;
+  color: ${({ theme }) => theme.colors.grayscale.darkWhite};
+  font: ${({ theme }) => theme.fonts.body2};
+`;

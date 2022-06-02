@@ -26,7 +26,15 @@ const Queue = () => {
         </S.MemberHeader>
         <S.Line />
       </div>
-      <S.ListContainer>{renderQueue}</S.ListContainer>
+      <S.ListContainer>
+        {renderQueue}
+        {room && room.contents.length <= 0 && (
+          <S.Message>
+            <div>대기열이 비어있어요.</div>
+            컨텐츠를 추가해보세요!
+          </S.Message>
+        )}
+      </S.ListContainer>
       <ContentPicker onClose={() => setOpen(false)} open={open} />
     </>
   );
