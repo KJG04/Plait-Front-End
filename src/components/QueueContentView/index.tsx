@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FC, memo } from "react";
 import * as S from "./styles";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { Tooltip } from "@nextui-org/react";
 
 export interface QueueContentViewPropsType {
   title: string;
@@ -33,8 +34,10 @@ const QueueContentView: FC<QueueContentViewPropsType> = (props) => {
           {isPlaying && <S.Playing>현재 재생중</S.Playing>}
         </S.Footer>
       </S.ContentContainer>
-      <S.DeleteContainer onClick={onDeleteClick} className="delete">
-        <FontAwesomeIcon size="1x" fixedWidth icon={faTrashCan} />
+      <S.DeleteContainer onDoubleClick={onDeleteClick} className="delete">
+        <Tooltip content="두번 클릭으로 삭제" placement="right" color="invert">
+          <FontAwesomeIcon size="1x" fixedWidth icon={faTrashCan} />
+        </Tooltip>
       </S.DeleteContainer>
     </S.Container>
   );
