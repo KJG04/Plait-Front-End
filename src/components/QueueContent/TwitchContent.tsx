@@ -18,7 +18,7 @@ const TwitchContent: FC<PropsType> = (props) => {
   const room = useRoomContext();
 
   const onDelete = useCallback(() => {
-    mutate({ variables: { roomCode: room?.code, uuid } });
+    mutate({ variables: { roomCode: room.code, uuid } });
   }, [mutate, room?.code, uuid]);
 
   const prop: QueueContentViewPropsType = {

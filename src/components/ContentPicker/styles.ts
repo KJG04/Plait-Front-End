@@ -57,6 +57,7 @@ export const Twitch = styled(TwitchPlayer)`
   width: 100%;
   aspect-ratio: 16 / 9;
   border-radius: 10px;
+  overflow: hidden;
   margin-top: 16px;
   width: 60vw;
   display: block;

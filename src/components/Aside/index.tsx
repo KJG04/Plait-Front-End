@@ -7,6 +7,7 @@ import { Queue } from "@components";
 import { useRoomContext } from "@hooks";
 import toast from "react-hot-toast";
 import { useTheme } from "@emotion/react";
+import { Tooltip } from "@nextui-org/react";
 
 const Aside = () => {
   const [isHover, setIsHover] = useState(false);
@@ -69,14 +70,10 @@ const Aside = () => {
   };
 
   const onCodeClick = () => {
-    if (!room) {
-      return;
-    }
-
     copyCode(room.code);
   };
 
-  const inviteMessage = `링크나 코드를 사용하여 Plait에 참가하세요!\n코드: ${room?.code}\n초대 링크: http://localhost:3000?join=${room?.code}`;
+  const inviteMessage = `링크나 코드를 사용하여 Plait에 참가하세요!\n코드: ${room.code}\n초대 링크: http://localhost:3000?join=${room.code}`;
 
   const onInviteClick = () => {
     copyCode(inviteMessage.trim());
@@ -112,12 +109,14 @@ const Aside = () => {
           <S.InviteContainer>
             <S.MemberHeader>
               <span>코드</span>
-              <S.TextButton onClick={onCodeClick}>{room?.code}</S.TextButton>
+              <Tooltip content="코드 복사" color="invert">
+                <S.TextButton onClick={onCodeClick}>{room.code}</S.TextButton>
+              </Tooltip>
             </S.MemberHeader>
             <S.HeaderWrapper>
               <S.Link
                 readOnly
-                defaultValue={`http://localhost:3000?join=${room?.code}`}
+                defaultValue={`http://localhost:3000?join=${room.code}`}
               />
               <S.Copy onClick={onInviteClick}>
                 <Image src={ClipIcon} alt="copy" />

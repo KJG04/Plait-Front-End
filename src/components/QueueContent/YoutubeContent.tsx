@@ -19,7 +19,7 @@ const YoutubeContent: FC<PropsType> = (props) => {
   const room = useRoomContext();
 
   const onDelete = useCallback(() => {
-    mutate({ variables: { roomCode: room?.code, uuid: props.data.uuid } });
+    mutate({ variables: { roomCode: room.code, uuid: props.data.uuid } });
   }, [mutate, props.data.uuid, room?.code]);
 
   if (isLoading) {

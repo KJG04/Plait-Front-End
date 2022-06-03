@@ -2,6 +2,7 @@ import { memo, useCallback, useState } from "react";
 import * as S from "./styles";
 import { NextIcon, PauseIcon, PlayIcon } from "@icons";
 import Image from "next/image";
+import { Tooltip } from "@nextui-org/react";
 
 const ContentController = () => {
   const [isPause, setIsPause] = useState<boolean>(false);
@@ -22,14 +23,16 @@ const ContentController = () => {
       <S.Buttons>
         <S.Button onClick={onPlayPauseAction}>
           {isPause ? (
-            <Image src={PauseIcon} alt="pause" />
-          ) : (
             <Image src={PlayIcon} alt="play" />
+          ) : (
+            <Image src={PauseIcon} alt="pause" />
           )}
         </S.Button>
-        <S.Button>
-          <Image src={NextIcon} alt="next" />
-        </S.Button>
+        <Tooltip content="다음 콘텐츠" color="invert">
+          <S.Button>
+            <Image src={NextIcon} alt="next" />
+          </S.Button>
+        </Tooltip>
       </S.Buttons>
       <S.PrograssWrapper>
         <S.Time>{time}</S.Time>

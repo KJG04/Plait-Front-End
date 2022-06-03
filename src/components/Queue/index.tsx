@@ -9,7 +9,7 @@ const Queue = () => {
 
   const renderQueue = useMemo(
     () =>
-      room?.contents.map((value, index) => {
+      room.contents.map((value, index) => {
         return (
           <QueueContent isPlaying={index === 0} data={value} key={value.uuid} />
         );
@@ -28,20 +28,18 @@ const Queue = () => {
       </div>
       <S.ListContainer>
         {renderQueue}
-        {room && room.contents.length <= 0 && (
+        {room.contents.length <= 0 && (
           <S.Message>
             <div>대기열이 비어있어요.</div>
             컨텐츠를 추가해보세요!
           </S.Message>
         )}
       </S.ListContainer>
-      {room && (
-        <ContentPicker
-          id={room.code}
-          onClose={() => setOpen(false)}
-          open={open}
-        />
-      )}
+      <ContentPicker
+        id={room.code}
+        onClose={() => setOpen(false)}
+        open={open}
+      />
     </>
   );
 };
