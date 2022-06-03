@@ -12,10 +12,16 @@ export const Container = styled.button`
   width: 100%;
   max-width: 100%;
   min-width: 0px;
+  position: relative;
 
   &:hover,
   &:focus-visible {
     background-color: ${({ theme }) => theme.colors.grayscale.gray};
+  }
+
+  &:hover .delete {
+    visibility: visible;
+    opacity: 1;
   }
 `;
 
@@ -79,4 +85,20 @@ export const Name = styled.div`
 export const Playing = styled.div`
   font: ${({ theme }) => theme.fonts.body2};
   color: ${({ theme }) => theme.colors.primary};
+`;
+
+export const DeleteContainer = styled.button`
+  position: absolute;
+  background-color: ${({ theme }) => theme.colors.error};
+  border-radius: 5px;
+  padding: 4px;
+  top: 15px;
+  left: 15px;
+  transition: all 0.2s ease-in-out;
+  visibility: hidden;
+  opacity: 0;
+
+  &:hover {
+    filter: brightness(1.5);
+  }
 `;

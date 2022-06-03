@@ -1,5 +1,7 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FC, memo } from "react";
 import * as S from "./styles";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 export interface QueueContentViewPropsType {
   title: string;
@@ -7,11 +9,16 @@ export interface QueueContentViewPropsType {
   src: string;
   isPlaying: boolean;
   userName: string;
-  uuid: string;
+  onDelete: () => void;
 }
 
 const QueueContentView: FC<QueueContentViewPropsType> = (props) => {
-  const { src, description, isPlaying, title, userName } = props;
+  const { src, description, isPlaying, title, userName, onDelete } = props;
+
+  const onDeleteClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.stopPropagation();
+    onDelete();
+  };
 
   return (
     <S.Container>
@@ -26,6 +33,9 @@ const QueueContentView: FC<QueueContentViewPropsType> = (props) => {
           {isPlaying && <S.Playing>현재 재생중</S.Playing>}
         </S.Footer>
       </S.ContentContainer>
+      <S.DeleteContainer onClick={onDeleteClick} className="delete">
+        <FontAwesomeIcon size="1x" fixedWidth icon={faTrashCan} />
+      </S.DeleteContainer>
     </S.Container>
   );
 };

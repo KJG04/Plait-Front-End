@@ -1,8 +1,9 @@
-import { FC, memo } from "react";
+import { FC, memo, useCallback } from "react";
 import { Content } from "@types";
-import { useYoutubeContentDetail } from "@queries";
+import { useDeleteContentMutation, useYoutubeContentDetail } from "@queries";
 import { QueueContentView, QueueContentSkeleton } from "@components";
 import { QueueContentViewPropsType } from "@components/QueueContentView";
+import { useRoomContext } from "@hooks";
 
 interface PropsType {
   data: Content;
@@ -14,6 +15,12 @@ const YoutubeContent: FC<PropsType> = (props) => {
   const src = `https://img.youtube.com/vi/${contentId}/maxresdefault.jpg`;
 
   const { data, isLoading, isError } = useYoutubeContentDetail(contentId);
+  const [mutate] = useDeleteContentMutation();
+  const room = useRoomContext();
+
+  const onDelete = useCallback(() => {
+    mutate({ variables: { roomCode: room?.code, uuid: props.data.uuid } });
+  }, [mutate, props.data.uuid, room?.code]);
 
   if (isLoading) {
     return <QueueContentSkeleton />;
@@ -33,7 +40,7 @@ const YoutubeContent: FC<PropsType> = (props) => {
     userName: user.name,
     src,
     description: data.data.items[0].snippet.description,
-    uuid: props.data.uuid,
+    onDelete,
   };
 
   return <QueueContentView {...prop} />;
