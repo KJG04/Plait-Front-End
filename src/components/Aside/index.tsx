@@ -15,6 +15,11 @@ const Aside = () => {
   const containerRef = useRef<HTMLElement>(null);
   const room = useRoomContext();
   const theme = useTheme();
+  const inviteLink = `${
+    typeof window !== "undefined"
+      ? `${window.location.protocol}//${window.location.host}`
+      : ""
+  }?join=${room.code}`;
 
   const omMouseMove = useCallback((e: MouseEvent) => {
     if (!containerRef.current) {
@@ -73,7 +78,7 @@ const Aside = () => {
     copyCode(room.code);
   };
 
-  const inviteMessage = `링크나 코드를 사용하여 Plait에 참가하세요!\n코드: ${room.code}\n초대 링크: http://localhost:3000?join=${room.code}`;
+  const inviteMessage = `링크나 코드를 사용하여 Plait에 참가하세요!\n코드: ${room.code}\n초대 링크: ${inviteLink}`;
 
   const onInviteClick = () => {
     copyCode(inviteMessage.trim());
@@ -114,10 +119,7 @@ const Aside = () => {
               </Tooltip>
             </S.MemberHeader>
             <S.HeaderWrapper>
-              <S.Link
-                readOnly
-                defaultValue={`http://localhost:3000?join=${room.code}`}
-              />
+              <S.Link readOnly defaultValue={inviteLink} />
               <S.Copy onClick={onInviteClick}>
                 <Image src={ClipIcon} alt="copy" />
               </S.Copy>
