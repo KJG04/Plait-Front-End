@@ -3,10 +3,14 @@ import Link from "next/link";
 import { Fragment } from "react";
 import { ScreenSaver } from "@components";
 import * as S from "./styles";
+import Head from "next/head";
 
 export const Container500: NextPage = () => {
   return (
     <Fragment>
+      <Head>
+        <title>요청 처리중 오류 발생 - Plait</title>
+      </Head>
       <ScreenSaver />
       <S.Container>
         <S.Title>500</S.Title>

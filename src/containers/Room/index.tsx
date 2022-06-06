@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { RecoilRoot } from "recoil";
 import { RoomSSRProps } from "@pages/[id]";
@@ -13,6 +13,7 @@ import {
 import * as S from "./styles";
 import { useAlive, useRoom, useRoomSubscription } from "@queries";
 import { roomContext } from "@contexts";
+import Head from "next/head";
 
 const RoomContainer: NextPage<RoomSSRProps> = (props) => {
   const { id, room } = props;
@@ -66,19 +67,24 @@ const RoomContainer: NextPage<RoomSSRProps> = (props) => {
   }, [sData]);
 
   return (
-    <RecoilRoot>
-      <roomContext.Provider value={contextValue}>
-        <S.Container>
-          <S.TopContainer>
-            <Aside />
-            <Player />
-          </S.TopContainer>
-          <BottomBar />
-          <Members />
-        </S.Container>
-        <EmojiEventListener />
-      </roomContext.Provider>
-    </RecoilRoot>
+    <Fragment>
+      <Head>
+        <title>{id} - Plait</title>
+      </Head>
+      <RecoilRoot>
+        <roomContext.Provider value={contextValue}>
+          <S.Container>
+            <S.TopContainer>
+              <Aside />
+              <Player />
+            </S.TopContainer>
+            <BottomBar />
+            <Members />
+          </S.Container>
+          <EmojiEventListener />
+        </roomContext.Provider>
+      </RecoilRoot>
+    </Fragment>
   );
 };
 
