@@ -87,7 +87,7 @@ export const Playing = styled.div`
   color: ${({ theme }) => theme.colors.primary};
 `;
 
-export const DeleteContainer = styled.button`
+export const DeleteContainer = styled.div`
   position: absolute;
   background-color: ${({ theme }) => theme.colors.error};
   border-radius: 5px;

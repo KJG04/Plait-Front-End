@@ -16,7 +16,7 @@ export interface QueueContentViewPropsType {
 const QueueContentView: FC<QueueContentViewPropsType> = (props) => {
   const { src, description, isPlaying, title, userName, onDelete } = props;
 
-  const onDeleteClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+  const onDeleteClick: React.MouseEventHandler<HTMLDivElement> = (e) => {
     e.stopPropagation();
     onDelete();
   };
