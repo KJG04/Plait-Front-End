@@ -1,5 +1,4 @@
-import Content from "./content";
-import User from "./user";
+import { Content, User } from "@types";
 
 export interface Room {
   code: string;
