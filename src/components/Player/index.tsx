@@ -27,7 +27,7 @@ const Player = () => {
   }
 
   if (current.contentType === ContentType.YOUTUBE) {
-    return <YoutubePlayer content={current} />;
+    return <YoutubePlayer key={current.uuid} content={current} />;
   }
 
   return <S.Container>{current?.contentId}</S.Container>;
