@@ -1,4 +1,5 @@
 import { useRoomContext } from "@hooks";
+import { useDeleteContentMutation } from "@queries/content";
 import { Content } from "@types";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import YouTube, { YouTubeEvent } from "react-youtube";
@@ -10,10 +11,15 @@ interface PropsType {
 
 const YoutubePlayer: FC<PropsType> = (props) => {
   const room = useRoomContext();
-  const { contentId } = props.content;
+  const { contentId, uuid } = props.content;
   const ref = useRef<YouTube>(null);
   const [ready, setReady] = useState<boolean>(false);
   const [mute, setMute] = useState<boolean>(true);
+  const [mutate] = useDeleteContentMutation();
+
+  const onEnd = useCallback(() => {
+    mutate({ variables: { roomCode: room.code, uuid } });
+  }, [mutate, room.code, uuid]);
 
   const onIsPlayingUpdate = useCallback(async () => {
     if (room.isPlaying) {
@@ -62,6 +68,7 @@ const YoutubePlayer: FC<PropsType> = (props) => {
             },
           }}
           onReady={onReady}
+          onEnd={onEnd}
         />
       </S.YoutubeContainer>
       {ready && mute && (
