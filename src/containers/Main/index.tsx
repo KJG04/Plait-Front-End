@@ -5,7 +5,12 @@ import { NextPage } from "next";
 import Head from "next/head";
 import { Fragment, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { JoinRoomModal, ScreenSaver, CreateRoomModal } from "@components";
+import {
+  JoinRoomModal,
+  ScreenSaver,
+  CreateRoomModal,
+  ToJoinedRoomButton,
+} from "@components";
 import { useActiveUserCount, useRoomExists } from "@queries";
 import * as S from "./styles";
 
@@ -126,6 +131,7 @@ const MainContainer: NextPage = () => {
         open={createModalOpen}
         onClose={() => setCreateModalOpen(false)}
       />
+      <ToJoinedRoomButton />
     </Fragment>
   );
 };

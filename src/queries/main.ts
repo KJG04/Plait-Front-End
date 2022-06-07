@@ -42,4 +42,21 @@ const useActiveUserCount = () => {
   return useQuery(activeUser, { pollInterval: 5000 });
 };
 
-export { useRoomExists, useSignRoomMutation, useActiveUserCount };
+const useJoinedRoom = () => {
+  const getJoinedRoomQuery = gql`
+    query {
+      joinedRoom {
+        code
+      }
+    }
+  `;
+
+  return useQuery(getJoinedRoomQuery, { pollInterval: 5000 });
+};
+
+export {
+  useRoomExists,
+  useSignRoomMutation,
+  useActiveUserCount,
+  useJoinedRoom,
+};
