@@ -1,7 +1,4 @@
 import { FC, memo, useCallback } from "react";
-import { useSetRecoilState } from "recoil";
-import { usedEmojiState } from "@atoms";
-import { storageKeys } from "@constant";
 import * as S from "./styles";
 import { useEmojiMutation } from "@queries";
 import { useRoomContext } from "@hooks";
@@ -11,18 +8,11 @@ interface PropsType {
 }
 
 const Emoji: FC<PropsType> = ({ emoji }) => {
-  const setUsedEmoji = useSetRecoilState(usedEmojiState);
   const room = useRoomContext();
   const [mutate] = useEmojiMutation();
 
   const onDragEnd = useCallback(
     (e: React.DragEvent) => {
-      setUsedEmoji((prev) => {
-        const result = [...new Set([emoji, ...prev])].slice(0, 8);
-        localStorage.setItem(storageKeys.usedEmoji, JSON.stringify(result));
-
-        return result;
-      });
       const { clientX, clientY } = e;
 
       mutate({
@@ -36,7 +26,7 @@ const Emoji: FC<PropsType> = ({ emoji }) => {
         },
       });
     },
-    [emoji, mutate, room.code, setUsedEmoji],
+    [emoji, mutate, room.code],
   );
 
   const onClick = useCallback(() => {
