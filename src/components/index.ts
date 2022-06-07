@@ -19,3 +19,5 @@ export { default as QueueContentView } from "../components/QueueContentView";
 export { default as ScreenSaver } from "../components/ScreenSaver";
 export * from "../components/SignRoomModal";
 export { default as SignRoomModalView } from "../components/SignRoomModalView";
+export { default as YoutubePlayer } from "../components/YoutubePlayer";
+export { default as ScreenType } from "../components/ScreenType";
