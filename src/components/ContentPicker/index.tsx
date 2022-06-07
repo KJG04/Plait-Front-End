@@ -56,7 +56,7 @@ const ContentPicker: FC<PropsType> = (props) => {
     setLinkState("ERROR");
   }, [link]);
 
-  const onModalClose = () => {
+  const onModalOpen = () => {
     setLink("");
     setLinkState("EMPTY");
   };
@@ -83,7 +83,7 @@ const ContentPicker: FC<PropsType> = (props) => {
       open={open}
       closeButton
       onClose={onClose}
-      onOpen={onModalClose}
+      onOpen={onModalOpen}
       style={{
         textAlign: "left",
         padding: "0",

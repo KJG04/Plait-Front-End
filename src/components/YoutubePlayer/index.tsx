@@ -37,7 +37,7 @@ const YoutubePlayer: FC<PropsType> = (props) => {
     } else {
       await e.target.pauseVideo();
     }
-    await e.target.setPlaybackQuality("hd1080");
+    await e.target.setPlaybackQuality("default");
     setReady(true);
   };
 
