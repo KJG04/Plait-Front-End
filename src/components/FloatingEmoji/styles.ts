@@ -12,7 +12,7 @@ export const Emoji = styled.div`
 `;
 
 export const Name = styled.div`
-  background-color: ${({ color }) => color};
+  background-color: #${({ color }) => color};
   font: ${({ theme }) => theme.fonts.description};
   border-radius: 5px;
   color: ${({ theme }) => theme.colors.grayscale.white};

@@ -6,10 +6,14 @@ import { EmojiEvent, emojiEventName } from "@constant";
 import { FloatingEmoji } from "@components";
 import * as S from "./styles";
 import { v4 } from "uuid";
+import { useEmoji } from "@queries/emoji";
+import { useRoomContext } from "@hooks";
 
 const EmojiEventListener = () => {
   const [floatingEmojis, setFloatingEmojis] =
     useRecoilState(floatingEmojisState);
+  const room = useRoomContext();
+  const { data } = useEmoji(room.code);
 
   const emojiListener = useCallback(
     (e: Event) => {
@@ -38,6 +42,14 @@ const EmojiEventListener = () => {
       document.removeEventListener(emojiEventName, emojiListener);
     };
   }, [emojiListener]);
+
+  useEffect(() => {
+    if (data?.listeningEmoji) {
+      const d = data.listeningEmoji;
+      const e = new EmojiEvent(d.emoji, d.name, d.color, d.x, d.y);
+      document.dispatchEvent(e);
+    }
+  }, [data]);
 
   const renderFloatingEmojis = useMemo(
     () =>

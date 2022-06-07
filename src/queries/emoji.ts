@@ -13,15 +13,14 @@ const listeningEmojiSubscription = gql`
 `;
 
 const popEmojiMutation = gql`
-  mutation PopEmoji($roomCode: String!, $emoji: EmojiInput) {
-    popEmoji(roomCode: "", emoji: $emoji)
+  mutation PopEmoji($roomCode: String!, $emoji: EmojiInput!) {
+    popEmoji(roomCode: $roomCode, emoji: $emoji)
   }
 `;
 
 const useEmoji = (roomCode: string) =>
   useSubscription(listeningEmojiSubscription, { variables: { roomCode } });
 
-const useEmojiMutation = (roomCode: string) =>
-  useMutation(popEmojiMutation, { variables: { roomCode } });
+const useEmojiMutation = () => useMutation(popEmojiMutation);
 
 export { useEmoji, useEmojiMutation };

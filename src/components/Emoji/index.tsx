@@ -1,9 +1,10 @@
-import { useTheme } from "@emotion/react";
 import { FC, memo, useCallback } from "react";
 import { useSetRecoilState } from "recoil";
 import { usedEmojiState } from "@atoms";
-import { EmojiEvent, storageKeys } from "@constant";
+import { storageKeys } from "@constant";
 import * as S from "./styles";
+import { useEmojiMutation } from "@queries";
+import { useRoomContext } from "@hooks";
 
 interface PropsType {
   emoji: string;
@@ -11,7 +12,8 @@ interface PropsType {
 
 const Emoji: FC<PropsType> = ({ emoji }) => {
   const setUsedEmoji = useSetRecoilState(usedEmojiState);
-  const theme = useTheme();
+  const room = useRoomContext();
+  const [mutate] = useEmojiMutation();
 
   const onDragEnd = useCallback(
     (e: React.DragEvent) => {
@@ -23,17 +25,18 @@ const Emoji: FC<PropsType> = ({ emoji }) => {
       });
       const { clientX, clientY } = e;
 
-      const event = new EmojiEvent(
-        emoji,
-        "김진근",
-        theme.colors.primary,
-        clientX,
-        clientY,
-      );
-
-      document.dispatchEvent(event);
+      mutate({
+        variables: {
+          roomCode: room.code,
+          emoji: {
+            emoji,
+            x: clientX,
+            y: clientY,
+          },
+        },
+      });
     },
-    [emoji, setUsedEmoji, theme.colors.primary],
+    [emoji, mutate, room.code, setUsedEmoji],
   );
 
   const onClick = useCallback(() => {
@@ -43,10 +46,17 @@ const Emoji: FC<PropsType> = ({ emoji }) => {
     const x = offset / 2 + Math.random() * (width - offset);
     const y = offset / 2 + Math.random() * (height - offset);
 
-    const event = new EmojiEvent(emoji, "김진근", theme.colors.primary, x, y);
-
-    document.dispatchEvent(event);
-  }, [emoji, theme.colors.primary]);
+    mutate({
+      variables: {
+        roomCode: room.code,
+        emoji: {
+          emoji,
+          x,
+          y,
+        },
+      },
+    });
+  }, [emoji, mutate, room.code]);
 
   return (
     <S.Button onClick={onClick}>
