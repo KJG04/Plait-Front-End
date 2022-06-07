@@ -5,12 +5,25 @@ import Image from "next/image";
 import { Tooltip } from "@nextui-org/react";
 import { useRoomContext } from "@hooks";
 import { useIsPlayingMutation } from "@queries/room";
+import { useDeleteContentMutation } from "@queries/content";
 
 const ContentController = () => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [time, setTime] = useState<number>(0);
   const room = useRoomContext();
   const [mutate] = useIsPlayingMutation();
+  const [deleteContentMutate] = useDeleteContentMutation();
+
+  const onNext = useCallback(() => {
+    if (room.contents.length <= 0) {
+      return;
+    }
+
+    const cur = room.contents[0];
+    const { uuid } = cur;
+
+    deleteContentMutate({ variables: { roomCode: room.code, uuid } });
+  }, [deleteContentMutate, room.code, room.contents]);
 
   const onPlayPauseAction = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -41,7 +54,7 @@ const ContentController = () => {
           )}
         </S.Button>
         <Tooltip content="다음 콘텐츠" color="invert">
-          <S.Button>
+          <S.Button disabled={room.contents.length <= 0} onClick={onNext}>
             <Image src={NextIcon} alt="next" />
           </S.Button>
         </Tooltip>

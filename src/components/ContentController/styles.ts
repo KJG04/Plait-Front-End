@@ -26,6 +26,14 @@ export const Button = styled.button`
   &:active {
     transform: scale(0.8);
   }
+
+  &:disabled {
+    opacity: 0.5;
+
+    &:active {
+      transform: scale(1);
+    }
+  }
 `;
 
 export const PrograssWrapper = styled.div`
