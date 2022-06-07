@@ -92,6 +92,14 @@ const useContentMutation = () => {
   return { addContent, deleteContent };
 };
 
+const isPlayingMutateion = gql`
+  mutation IsPlayingMutation($roomCode: String!, $condition: Boolean!) {
+    isContentPlaying(roomCode: $roomCode, condition: $condition)
+  }
+`;
+
+const useIsPlayingMutation = () => useMutation(isPlayingMutateion);
+
 export {
   getRoomQuery,
   checkCanJoinRoomQuery,
@@ -99,4 +107,5 @@ export {
   useAlive,
   useRoomSubscription,
   useContentMutation,
+  useIsPlayingMutation,
 };

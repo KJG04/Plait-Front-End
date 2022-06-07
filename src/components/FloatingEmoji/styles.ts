@@ -4,6 +4,7 @@ export const Container = styled.div`
   position: absolute;
   transform: translate(-50%, -50%);
   pointer-events: none;
+  filter: drop-shadow(0px 0px 5px #00000050);
 `;
 
 export const Emoji = styled.div`

@@ -1,31 +1,43 @@
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import * as S from "./styles";
 import { NextIcon, PauseIcon, PlayIcon } from "@icons";
 import Image from "next/image";
 import { Tooltip } from "@nextui-org/react";
+import { useRoomContext } from "@hooks";
+import { useIsPlayingMutation } from "@queries/room";
 
 const ContentController = () => {
-  const [isPause, setIsPause] = useState<boolean>(false);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [time, setTime] = useState<number>(0);
+  const room = useRoomContext();
+  const [mutate] = useIsPlayingMutation();
 
   const onPlayPauseAction = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.stopPropagation();
       e.preventDefault();
 
-      setIsPause((prev) => !prev);
+      setIsPlaying((prev) => {
+        const now = !prev;
+        mutate({ variables: { roomCode: room.code, condition: now } });
+        return now;
+      });
     },
-    [],
+    [mutate, room.code],
   );
+
+  useEffect(() => {
+    setIsPlaying(room.isPlaying);
+  }, [room.isPlaying]);
 
   return (
     <S.PlayContainer>
       <S.Buttons>
         <S.Button onClick={onPlayPauseAction}>
-          {isPause ? (
-            <Image src={PlayIcon} alt="play" />
-          ) : (
+          {isPlaying ? (
             <Image src={PauseIcon} alt="pause" />
+          ) : (
+            <Image src={PlayIcon} alt="play" />
           )}
         </S.Button>
         <Tooltip content="다음 콘텐츠" color="invert">
