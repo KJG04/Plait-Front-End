@@ -100,6 +100,25 @@ const isPlayingMutateion = gql`
 
 const useIsPlayingMutation = () => useMutation(isPlayingMutateion);
 
+const playTimeMutation = gql`
+  mutation PlayTimeMutation(
+    $roomCode: String
+    $playTime: Int!
+    $force: Boolean!
+  ) {
+    updatePlayTime(roomCode: $roomCode, playTime: $playTime, force: $force)
+  }
+`;
+
+const playTimeSubsciption = gql`
+  subscription PlayTimeSubsciption($roomCode: String!) {
+    playTime(roomCode: $roomCode)
+  }
+`;
+
+const usePlayTimeMutation = () => useMutation(playTimeMutation);
+const usePlayTime = () => useSubscription(playTimeSubsciption);
+
 export {
   getRoomQuery,
   checkCanJoinRoomQuery,
@@ -108,4 +127,6 @@ export {
   useRoomSubscription,
   useContentMutation,
   useIsPlayingMutation,
+  usePlayTimeMutation,
+  usePlayTime,
 };
