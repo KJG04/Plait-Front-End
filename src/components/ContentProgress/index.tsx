@@ -1,27 +1,52 @@
 import { useReactiveVar } from "@apollo/client";
+import { useRoomContext } from "@hooks";
+import { usePlayTime, usePlayTimeMutation } from "@queries/room";
 import { durationVar, playTimeVar } from "@stores";
 import moment from "moment";
-import { memo } from "react";
+import { memo, useEffect } from "react";
 import * as S from "./styles";
 
 const ContentProgress = () => {
   const playTime = useReactiveVar(playTimeVar);
   const duration = useReactiveVar(durationVar);
+  const room = useRoomContext();
+  const { data } = usePlayTime(room.code);
+  const [playTimeMutate] = usePlayTimeMutation();
 
   const toString = (m: number) =>
     moment.utc(moment.duration(m).as("milliseconds")).format("H:mm:ss");
 
+  useEffect(() => {
+    playTimeVar(room.playTime);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (data && data.playTime) {
+      playTimeVar(data.playTime);
+    }
+  }, [data]);
+
   return (
     <S.PrograssWrapper>
-      <S.Time>{toString(1000 * 30)}</S.Time>
+      <S.Time>{toString(playTime)}</S.Time>
       <S.Progress
         percent={(playTime / duration) * 100}
         type="range"
         min={0}
-        max={3 * 60 + 30}
-        value={playTime}
+        max={duration}
+        defaultValue={playTime}
+        onChange={(e) => {
+          playTimeMutate({
+            variables: {
+              roomCode: room.code,
+              playTime: Number.parseInt(e.target.value),
+              force: true,
+            },
+          });
+        }}
       />
-      <S.Time>{toString(1000 * 60 * 3)}</S.Time>
+      <S.Time>{toString(duration)}</S.Time>
     </S.PrograssWrapper>
   );
 };

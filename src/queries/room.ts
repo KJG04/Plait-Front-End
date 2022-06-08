@@ -102,8 +102,8 @@ const useIsPlayingMutation = () => useMutation(isPlayingMutateion);
 
 const playTimeMutation = gql`
   mutation PlayTimeMutation(
-    $roomCode: String
-    $playTime: Int!
+    $roomCode: String!
+    $playTime: Float!
     $force: Boolean!
   ) {
     updatePlayTime(roomCode: $roomCode, playTime: $playTime, force: $force)
@@ -117,7 +117,8 @@ const playTimeSubsciption = gql`
 `;
 
 const usePlayTimeMutation = () => useMutation(playTimeMutation);
-const usePlayTime = () => useSubscription(playTimeSubsciption);
+const usePlayTime = (roomCode: string) =>
+  useSubscription(playTimeSubsciption, { variables: { roomCode } });
 
 export {
   getRoomQuery,

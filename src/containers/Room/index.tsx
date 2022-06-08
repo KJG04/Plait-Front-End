@@ -11,9 +11,10 @@ import {
   Player,
 } from "@components";
 import * as S from "./styles";
-import { useAlive, useRoom, useRoomSubscription } from "@queries";
+import { useAlive, usePlayTime, useRoom, useRoomSubscription } from "@queries";
 import { roomContext } from "@contexts";
 import Head from "next/head";
+import { forcePlayTimeVar, playTimeVar } from "@stores";
 
 const RoomContainer: NextPage<RoomSSRProps> = (props) => {
   const { id, room } = props;
@@ -22,6 +23,7 @@ const RoomContainer: NextPage<RoomSSRProps> = (props) => {
   const [mutate] = useAlive(id);
   const [contextValue, setContextValue] = useState(room);
   const { data: sData } = useRoomSubscription(id);
+  const { data: pData } = usePlayTime(room.code);
 
   const idle = useCallback(() => {
     document.body.style.cursor = "none";
@@ -65,6 +67,13 @@ const RoomContainer: NextPage<RoomSSRProps> = (props) => {
       setContextValue(sData.room);
     }
   }, [sData]);
+
+  useEffect(() => {
+    if (pData && pData.playTime) {
+      playTimeVar(pData.playTime);
+      forcePlayTimeVar(pData.playTime);
+    }
+  }, [pData]);
 
   return (
     <Fragment>

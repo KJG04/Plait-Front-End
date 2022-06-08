@@ -1,5 +1,8 @@
+import { useReactiveVar } from "@apollo/client";
 import { useRoomContext } from "@hooks";
 import { useDeleteContentMutation } from "@queries/content";
+import { usePlayTimeMutation } from "@queries/room";
+import { durationVar, forcePlayTimeVar, playTimeVar } from "@stores";
 import { Content } from "@types";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import YouTube, { YouTubeEvent } from "react-youtube";
@@ -16,6 +19,9 @@ const YoutubePlayer: FC<PropsType> = (props) => {
   const [ready, setReady] = useState<boolean>(false);
   const [mute, setMute] = useState<boolean>(true);
   const [mutate] = useDeleteContentMutation();
+  const [playTimeMutate] = usePlayTimeMutation();
+  const forcePlayTime = useReactiveVar(forcePlayTimeVar);
+  const [first, setFirst] = useState<boolean>(true);
 
   const onEnd = useCallback(() => {
     mutate({ variables: { roomCode: room.code, uuid } });
@@ -32,12 +38,17 @@ const YoutubePlayer: FC<PropsType> = (props) => {
 
   const onReady = async (e: YouTubeEvent) => {
     await e.target.mute();
+    await e.target.seekTo(room.playTime / 1000, true);
     if (room.isPlaying) {
       await e.target.playVideo();
     } else {
       await e.target.pauseVideo();
     }
     await e.target.setPlaybackQuality("default");
+
+    const dur = await ref.current?.internalPlayer.getDuration();
+    durationVar(dur * 1000);
+
     setReady(true);
   };
 
@@ -49,6 +60,53 @@ const YoutubePlayer: FC<PropsType> = (props) => {
   useEffect(() => {
     onIsPlayingUpdate();
   }, [onIsPlayingUpdate]);
+
+  useEffect(() => {
+    if (!first) {
+      ref.current?.internalPlayer.seekTo(forcePlayTime / 1000, true);
+    } else {
+      setFirst(false);
+    }
+  }, [forcePlayTime]);
+
+  const intervalPlayTimeUpdate = useCallback(async () => {
+    if (ref.current) {
+      const cur = await ref.current.internalPlayer.getCurrentTime();
+
+      const milli = cur * 1000;
+
+      playTimeMutate({
+        variables: { roomCode: room.code, playTime: milli, force: false },
+      });
+    }
+  }, [playTimeMutate, room.code]);
+
+  const updatePlayTime = async () => {
+    if (ref.current) {
+      const cur = await ref.current.internalPlayer.getCurrentTime();
+
+      const milli = cur * 1000;
+      playTimeVar(milli);
+    }
+  };
+
+  useEffect(() => {
+    const interval = setInterval(updatePlayTime, 500);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (room.isPlaying) {
+      const mutateInterval = setInterval(intervalPlayTimeUpdate, 1000);
+
+      return () => {
+        clearInterval(mutateInterval);
+      };
+    }
+  }, [intervalPlayTimeUpdate, room.isPlaying]);
 
   return (
     <>

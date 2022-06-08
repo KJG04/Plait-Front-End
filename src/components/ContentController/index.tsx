@@ -10,7 +10,6 @@ import { ContentProgress } from "@components";
 
 const ContentController = () => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [time, setTime] = useState<number>(0);
   const room = useRoomContext();
   const [mutate] = useIsPlayingMutation();
   const [deleteContentMutate] = useDeleteContentMutation();
