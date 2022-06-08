@@ -1,6 +1,6 @@
 const enum atomKeys {
   floatingEmoji = "floating-emoji",
-  usedEmoji = "used-emoji",
+  duration = "duration",
 }
 
 export default atomKeys;
