@@ -12,7 +12,7 @@ interface PropsType {
 
 const YoutubeContent: FC<PropsType> = (props) => {
   const { contentId, user } = props.data;
-  const src = `https://img.youtube.com/vi/${contentId}/maxresdefault.jpg`;
+  const src = `https://img.youtube.com/vi/${contentId}/default.jpg`;
 
   const { data, isLoading, isError } = useYoutubeContentDetail(contentId);
   const [mutate] = useDeleteContentMutation();
