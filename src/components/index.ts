@@ -22,3 +22,4 @@ export { default as SignRoomModalView } from "../components/SignRoomModalView";
 export { default as YoutubePlayer } from "../components/YoutubePlayer";
 export { default as ScreenType } from "../components/ScreenType";
 export { default as ToJoinedRoomButton } from "../components/ToJoinedRoomButton";
+export { default as MobileCover } from "../components/MobileCover";
