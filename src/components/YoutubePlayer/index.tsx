@@ -23,9 +23,18 @@ const YoutubePlayer: FC<PropsType> = (props) => {
   const forcePlayTime = useReactiveVar(forcePlayTimeVar);
   const [first, setFirst] = useState<boolean>(true);
 
-  const onEnd = useCallback(() => {
-    mutate({ variables: { roomCode: room.code, uuid } });
-  }, [mutate, room.code, uuid]);
+  const onEnd = useCallback(async () => {
+    await mutate({ variables: { roomCode: room.code, uuid } });
+    await playTimeMutate({
+      variables: {
+        roomCode: room.code,
+        playTime: 0,
+        force: true,
+      },
+    });
+    playTimeVar(0);
+    forcePlayTimeVar(0);
+  }, [mutate, playTimeMutate, room.code, uuid]);
 
   const onIsPlayingUpdate = useCallback(async () => {
     if (room.isPlaying) {
@@ -67,6 +76,7 @@ const YoutubePlayer: FC<PropsType> = (props) => {
     } else {
       setFirst(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [forcePlayTime]);
 
   const intervalPlayTimeUpdate = useCallback(async () => {

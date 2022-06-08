@@ -4,17 +4,19 @@ import { NextIcon, PauseIcon, PlayIcon } from "@icons";
 import Image from "next/image";
 import { Tooltip } from "@nextui-org/react";
 import { useRoomContext } from "@hooks";
-import { useIsPlayingMutation } from "@queries/room";
+import { useIsPlayingMutation, usePlayTimeMutation } from "@queries/room";
 import { useDeleteContentMutation } from "@queries/content";
 import { ContentProgress } from "@components";
+import { forcePlayTimeVar, playTimeVar } from "@stores";
 
 const ContentController = () => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const room = useRoomContext();
   const [mutate] = useIsPlayingMutation();
   const [deleteContentMutate] = useDeleteContentMutation();
+  const [playTimeMutate] = usePlayTimeMutation();
 
-  const onNext = useCallback(() => {
+  const onNext = useCallback(async () => {
     if (room.contents.length <= 0) {
       return;
     }
@@ -22,8 +24,17 @@ const ContentController = () => {
     const cur = room.contents[0];
     const { uuid } = cur;
 
-    deleteContentMutate({ variables: { roomCode: room.code, uuid } });
-  }, [deleteContentMutate, room.code, room.contents]);
+    await deleteContentMutate({ variables: { roomCode: room.code, uuid } });
+    await playTimeMutate({
+      variables: {
+        roomCode: room.code,
+        playTime: 0,
+        force: true,
+      },
+    });
+    playTimeVar(0);
+    forcePlayTimeVar(0);
+  }, [deleteContentMutate, playTimeMutate, room.code, room.contents]);
 
   const onPlayPauseAction = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {

@@ -16,6 +16,16 @@ const ContentProgress = () => {
   const toString = (m: number) =>
     moment.utc(moment.duration(m).as("milliseconds")).format("H:mm:ss");
 
+  const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    playTimeMutate({
+      variables: {
+        roomCode: room.code,
+        playTime: Number.parseInt(e.target.value),
+        force: true,
+      },
+    });
+  };
+
   useEffect(() => {
     playTimeVar(room.playTime);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -36,15 +46,7 @@ const ContentProgress = () => {
         min={0}
         max={duration}
         defaultValue={playTime}
-        onChange={(e) => {
-          playTimeMutate({
-            variables: {
-              roomCode: room.code,
-              playTime: Number.parseInt(e.target.value),
-              force: true,
-            },
-          });
-        }}
+        onChange={onChange}
       />
       <S.Time>{toString(duration)}</S.Time>
     </S.PrograssWrapper>
