@@ -6,6 +6,7 @@ import { Tooltip } from "@nextui-org/react";
 import { useRoomContext } from "@hooks";
 import { useIsPlayingMutation } from "@queries/room";
 import { useDeleteContentMutation } from "@queries/content";
+import { ContentProgress } from "@components";
 
 const ContentController = () => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -59,18 +60,7 @@ const ContentController = () => {
           </S.Button>
         </Tooltip>
       </S.Buttons>
-      <S.PrograssWrapper>
-        <S.Time>{time}</S.Time>
-        <S.Progress
-          percent={(time / (3 * 60 + 30)) * 100}
-          type="range"
-          min={0}
-          max={3 * 60 + 30}
-          value={time}
-          onChange={(e) => setTime(e.target.valueAsNumber)}
-        />
-        <S.Time>3:30</S.Time>
-      </S.PrograssWrapper>
+      <ContentProgress />
     </S.PlayContainer>
   );
 };
