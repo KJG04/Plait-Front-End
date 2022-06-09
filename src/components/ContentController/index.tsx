@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import * as S from "./styles";
 import { NextIcon, PauseIcon, PlayIcon } from "@icons";
 import Image from "next/image";
@@ -8,6 +8,7 @@ import { useIsPlayingMutation, usePlayTimeMutation } from "@queries/room";
 import { useDeleteContentMutation } from "@queries/content";
 import { ContentProgress } from "@components";
 import { forcePlayTimeVar, playTimeVar } from "@stores";
+import { ContentType } from "@types";
 
 const ContentController = () => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -15,6 +16,12 @@ const ContentController = () => {
   const [mutate] = useIsPlayingMutation();
   const [deleteContentMutate] = useDeleteContentMutation();
   const [playTimeMutate] = usePlayTimeMutation();
+  const controlDisable = useMemo(
+    () =>
+      room.contents.length > 0 &&
+      room.contents[0].contentType === ContentType.TWITCH,
+    [room.contents],
+  );
 
   const onNext = useCallback(async () => {
     if (room.contents.length <= 0) {
@@ -57,7 +64,7 @@ const ContentController = () => {
   return (
     <S.PlayContainer>
       <S.Buttons>
-        <S.Button onClick={onPlayPauseAction}>
+        <S.Button disabled={controlDisable} onClick={onPlayPauseAction}>
           {isPlaying ? (
             <Image src={PauseIcon} alt="pause" />
           ) : (
