@@ -27,8 +27,6 @@
       "@queries": ["queries/index.ts"],
       "@constant/*": ["constant/*"],
       "@constant": ["constant/index.ts"],
-      "@atoms/*": ["atoms/*"],
-      "@atoms": ["atoms/index.ts"],
       "@assets/*": ["assets/*"],
       "@images": ["assets/images/index.ts"],
       "@icons": ["assets/icons/index.ts"],
