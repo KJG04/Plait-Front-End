@@ -1,10 +1,10 @@
 import { useRoomContext } from "@hooks";
 import { useDeleteContentMutation } from "@queries/content";
-import { usePlayTimeMutation } from "@queries/room";
+import { useIsPlayingMutation, usePlayTimeMutation } from "@queries/room";
 import { forcePlayTimeVar, playTimeVar } from "@stores";
 import { Content } from "@types";
 import dynamic from "next/dynamic";
-import { FC, memo, useCallback } from "react";
+import { FC, memo, useCallback, useEffect } from "react";
 import * as S from "./styles";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -31,6 +31,7 @@ const TwitchPlayer: FC<PropsType> = (props) => {
   const room = useRoomContext();
   const [mutate] = useDeleteContentMutation();
   const [playTimeMutate] = usePlayTimeMutation();
+  const [isPlayingMutate] = useIsPlayingMutation();
 
   const onOffline = useCallback(async () => {
     await mutate({ variables: { roomCode: room.code, uuid } });
@@ -44,6 +45,10 @@ const TwitchPlayer: FC<PropsType> = (props) => {
     playTimeVar(0);
     forcePlayTimeVar(0);
   }, [mutate, playTimeMutate, room.code, uuid]);
+
+  useEffect(() => {
+    isPlayingMutate({ variables: { roomCode: room.code, condition: true } });
+  }, []);
 
   return (
     <S.Container>
