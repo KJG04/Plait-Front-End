@@ -7,7 +7,8 @@ import { Queue } from "@components";
 import { useRoomContext } from "@hooks";
 import toast from "react-hot-toast";
 import { useTheme } from "@emotion/react";
-import { Tooltip } from "@nextui-org/react";
+import { Popover, Tooltip } from "@nextui-org/react";
+import { useRouter } from "next/router";
 
 const Aside = () => {
   const [isHover, setIsHover] = useState(false);
@@ -20,6 +21,7 @@ const Aside = () => {
       ? `${window.location.protocol}//${window.location.host}`
       : ""
   }?join=${room.code}`;
+  const router = useRouter();
 
   const omMouseMove = useCallback((e: MouseEvent) => {
     if (!containerRef.current) {
@@ -84,6 +86,10 @@ const Aside = () => {
     copyCode(inviteMessage.trim());
   };
 
+  const onLeaveClick = () => {
+    router.push("/");
+  };
+
   useEffect(() => {
     window.addEventListener("mousemove", omMouseMove);
 
@@ -108,7 +114,17 @@ const Aside = () => {
         <S.Container ref={containerRef}>
           <S.Header>
             <Image src={Logo} alt="logo" />
-            <S.TextButton>방 나가기</S.TextButton>
+            <Popover placement="bottom">
+              <Popover.Trigger>
+                <S.TextButton>방 나가기</S.TextButton>
+              </Popover.Trigger>
+              <Popover.Content css={{ backgroundColor: "transparent" }}>
+                <S.LeaveContainer>
+                  <div>방을 나가시겠습니까?</div>
+                  <S.LeaveButton onClick={onLeaveClick}>나가기</S.LeaveButton>
+                </S.LeaveContainer>
+              </Popover.Content>
+            </Popover>
           </S.Header>
           <S.Line />
           <S.InviteContainer>
