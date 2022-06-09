@@ -1,8 +1,9 @@
 import { useRoomContext } from "@hooks";
 import { Content, ContentType } from "@types";
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 import * as S from "./styles";
 import { YoutubePlayer } from "@components";
+import TwitchPlayer from "@components/TwitchPlayer";
 
 const Player = () => {
   const room = useRoomContext();
@@ -30,7 +31,11 @@ const Player = () => {
     return <YoutubePlayer key={current.uuid} content={current} />;
   }
 
+  if (current.contentType === ContentType.TWITCH) {
+    return <TwitchPlayer key={current.uuid} content={current} />;
+  }
+
   return <S.Container>{current?.contentId}</S.Container>;
 };
 
-export default Player;
+export default memo(Player);
