@@ -5,4 +5,7 @@ export const Profile = styled.div`
   height: 36px;
   background-color: ${({ theme }) => theme.colors.grayscale.lightGray};
   border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

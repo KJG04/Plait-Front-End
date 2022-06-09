@@ -28,7 +28,7 @@ export const Button = styled.button`
   }
 
   &:disabled {
-    opacity: 0.5;
+    opacity: 0.3;
 
     &:active {
       transform: scale(1);

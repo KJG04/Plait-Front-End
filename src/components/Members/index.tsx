@@ -1,9 +1,11 @@
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import Member from "@components/Member";
 import * as S from "./styles";
+import { useRoomContext } from "@hooks";
 
 const Members = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const room = useRoomContext();
 
   const onMouseMove = useCallback((e: MouseEvent) => {
     const { clientY: y } = e;
@@ -27,11 +29,9 @@ const Members = () => {
 
   return (
     <S.Container className={containerClassName}>
-      {Array(4)
-        .fill(0)
-        .map((_, index) => (
-          <Member key={index} />
-        ))}
+      {room.users.map((value) => (
+        <Member key={value.uuid} user={value} />
+      ))}
     </S.Container>
   );
 };
