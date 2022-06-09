@@ -1,56 +1,27 @@
-import { useReactiveVar } from "@apollo/client";
 import { useRoomContext } from "@hooks";
-import { usePlayTime, usePlayTimeMutation } from "@queries/room";
-import { durationVar, playTimeVar } from "@stores";
-import moment from "moment";
-import { memo, useEffect } from "react";
-import * as S from "./styles";
+import { ContentType } from "@types";
+import { memo } from "react";
+import NoControllProgress from "./NoControllProgress";
+import YoutubeControllProgress from "./YoutubeControllProgress";
 
 const ContentProgress = () => {
-  const playTime = useReactiveVar(playTimeVar);
-  const duration = useReactiveVar(durationVar);
   const room = useRoomContext();
-  const { data } = usePlayTime(room.code);
-  const [playTimeMutate] = usePlayTimeMutation();
 
-  const toString = (m: number) =>
-    moment.utc(moment.duration(m).as("milliseconds")).format("H:mm:ss");
+  if (room.contents.length <= 0) {
+    return <NoControllProgress percent={0} />;
+  }
 
-  const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    playTimeMutate({
-      variables: {
-        roomCode: room.code,
-        playTime: Number.parseInt(e.target.value),
-        force: true,
-      },
-    });
-  };
+  const cur = room.contents[0];
 
-  useEffect(() => {
-    playTimeVar(room.playTime);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  if (cur.contentType === ContentType.TWITCH) {
+    return <NoControllProgress percent={100} />;
+  }
 
-  useEffect(() => {
-    if (data && data.playTime) {
-      playTimeVar(data.playTime);
-    }
-  }, [data]);
+  if (cur.contentType === ContentType.YOUTUBE) {
+    return <YoutubeControllProgress />;
+  }
 
-  return (
-    <S.PrograssWrapper>
-      <S.Time>{toString(playTime)}</S.Time>
-      <S.Progress
-        percent={(playTime / duration) * 100}
-        type="range"
-        min={0}
-        max={duration}
-        defaultValue={playTime}
-        onChange={onChange}
-      />
-      <S.Time>{toString(duration)}</S.Time>
-    </S.PrograssWrapper>
-  );
+  return <NoControllProgress percent={100} />;
 };
 
 export default memo(ContentProgress);
