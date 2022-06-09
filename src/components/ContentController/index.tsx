@@ -59,13 +59,9 @@ const ContentController = () => {
 
   const onSpaceDown = useCallback(
     (e: KeyboardEvent) => {
-      if (
-        e.key === "Space" &&
-        !e.shiftKey &&
-        !e.ctrlKey &&
-        !e.metaKey &&
-        !e.altKey
-      ) {
+      if (e.code === "Space") {
+        console.log("123");
+
         e.stopPropagation();
         e.preventDefault();
 
@@ -85,10 +81,10 @@ const ContentController = () => {
 
   useEffect(() => {
     if (!controlDisable) {
-      document.addEventListener("keypress", onSpaceDown);
+      window.addEventListener("keydown", onSpaceDown);
 
       return () => {
-        document.removeEventListener("keypress", onSpaceDown);
+        window.removeEventListener("keydown", onSpaceDown);
       };
     }
   }, [controlDisable, onSpaceDown]);
