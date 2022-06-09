@@ -6,6 +6,7 @@ export const Outer = styled.div`
   width: 450px;
   transition: width 1s cubic-bezier(0.075, 0.82, 0.165, 1);
   will-change: width;
+  z-index: 10;
 
   &.close {
     width: 0px;

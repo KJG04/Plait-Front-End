@@ -62,7 +62,8 @@ const TwitchPlayer: FC<PropsType> = (props) => {
         onOffline={onOffline}
         onEnded={onOffline}
       />
-      <S.Cover />
+      <S.LeftCover />
+      <S.TopCover />
     </S.Container>
   );
 };

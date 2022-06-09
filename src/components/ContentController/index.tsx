@@ -57,9 +57,41 @@ const ContentController = () => {
     [mutate, room.code],
   );
 
+  const onSpaceDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (
+        e.key === "Space" &&
+        !e.shiftKey &&
+        !e.ctrlKey &&
+        !e.metaKey &&
+        !e.altKey
+      ) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        setIsPlaying((prev) => {
+          const now = !prev;
+          mutate({ variables: { roomCode: room.code, condition: now } });
+          return now;
+        });
+      }
+    },
+    [mutate, room.code],
+  );
+
   useEffect(() => {
     setIsPlaying(room.isPlaying);
   }, [room.isPlaying]);
+
+  useEffect(() => {
+    if (!controlDisable) {
+      document.addEventListener("keypress", onSpaceDown);
+
+      return () => {
+        document.removeEventListener("keypress", onSpaceDown);
+      };
+    }
+  }, [controlDisable, onSpaceDown]);
 
   return (
     <S.PlayContainer>
