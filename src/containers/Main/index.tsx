@@ -3,12 +3,16 @@ import { Tooltip } from "@nextui-org/react";
 import { PersistedQueryNotFoundError } from "apollo-server-errors";
 import { NextPage } from "next";
 import Head from "next/head";
-import { Fragment, useState } from "react";
-import JoinRoomModal from "../../components/SignRoomModal/JoinRoomModal";
-import ScreenSaver from "../../components/ScreenSaver";
-import { useActiveUserCount, useRoomExists } from "../../queries/Main";
+import { Fragment, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import {
+  JoinRoomModal,
+  ScreenSaver,
+  CreateRoomModal,
+  ToJoinedRoomButton,
+} from "@components";
+import { useActiveUserCount, useRoomExists } from "@queries";
 import * as S from "./styles";
-import CreateRoomModal from "../../components/SignRoomModal/CreateRoomModal";
 
 const MainContainer: NextPage = () => {
   const [code, setCode] = useState<string>("");
@@ -21,6 +25,7 @@ const MainContainer: NextPage = () => {
   const [joiningRoomCode, setJoiningRoomCode] = useState<string | null>(null);
   const tooltipVisible = code.trim().length > 0;
   const { data } = useActiveUserCount();
+  const router = useRouter();
 
   const onCodeChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setTootipColor("invert");
@@ -67,6 +72,16 @@ const MainContainer: NextPage = () => {
   };
 
   const onCreateClick = () => setCreateModalOpen(true);
+
+  useEffect(() => {
+    const code = router.query.join;
+
+    if (!!!code || typeof code !== "string") {
+      return;
+    }
+
+    setCode(code);
+  }, [router.query]);
 
   return (
     <Fragment>
@@ -116,6 +131,7 @@ const MainContainer: NextPage = () => {
         open={createModalOpen}
         onClose={() => setCreateModalOpen(false)}
       />
+      <ToJoinedRoomButton />
     </Fragment>
   );
 };

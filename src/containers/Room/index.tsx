@@ -1,21 +1,28 @@
 import { NextPage } from "next";
-import { useCallback, useEffect, useRef } from "react";
-import Aside from "../../components/Aside";
-import BottomBar from "../../components/BottomBar";
-import EmojiEventListener from "../../components/EmojiEventListener";
-import Members from "../../components/Members";
-import Player from "../../components/Player";
-import * as S from "./styles";
+import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
+import { RoomSSRProps } from "@pages/[id]";
+import {
+  Aside,
+  BottomBar,
+  EmojiEventListener,
+  Members,
+  Player,
+} from "@components";
+import * as S from "./styles";
+import { useAlive, usePlayTime, useRoom, useRoomSubscription } from "@queries";
+import { roomContext } from "@contexts";
+import Head from "next/head";
+import { forcePlayTimeVar, playTimeVar } from "@stores";
 
-interface SSPProps {
-  id: string;
-  roomExist: boolean;
-}
-
-const RoomContainer: NextPage<SSPProps> = (props) => {
-  const { id } = props;
+const RoomContainer: NextPage<RoomSSRProps> = (props) => {
+  const { id, room } = props;
   const idleRef = useRef<NodeJS.Timeout | null>(null);
+  const { data } = useRoom(id);
+  const [mutate] = useAlive(id);
+  const [contextValue, setContextValue] = useState(room);
+  const { data: sData } = useRoomSubscription(id);
+  const { data: pData } = usePlayTime(room.code);
 
   const idle = useCallback(() => {
     document.body.style.cursor = "none";
@@ -34,26 +41,56 @@ const RoomContainer: NextPage<SSPProps> = (props) => {
     document.addEventListener("mousemove", onMouseMove);
 
     return () => {
+      document.body.style.cursor = "default";
       document.removeEventListener("mousemove", onMouseMove);
     };
   }, [onMouseMove]);
 
   useEffect(() => {
-    console.log(id);
-  }, [id]);
+    mutate();
+    const interval = setInterval(() => mutate(), 1000 * 30);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [mutate]);
+
+  useEffect(() => {
+    if (data?.room) {
+      setContextValue(data.room);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (sData) {
+      setContextValue(sData.room);
+    }
+  }, [sData]);
+
+  useEffect(() => {
+    if (pData && pData.playTime) {
+      playTimeVar(pData.playTime);
+      forcePlayTimeVar(pData.playTime);
+    }
+  }, [pData]);
 
   return (
-    <>
-      <S.Container>
-        <S.TopContainer>
-          <Aside />
-          <Player />
-        </S.TopContainer>
-        <BottomBar />
-        <Members />
-      </S.Container>
-      <EmojiEventListener />
-    </>
+    <Fragment>
+      <Head>
+        <title>{id} - Plait</title>
+      </Head>
+      <roomContext.Provider value={contextValue}>
+        <S.Container>
+          <S.TopContainer>
+            <Aside />
+            <Player />
+          </S.TopContainer>
+          <BottomBar />
+          <Members />
+        </S.Container>
+        <EmojiEventListener />
+      </roomContext.Provider>
+    </Fragment>
   );
 };
 

@@ -11,6 +11,7 @@ export const Container = styled.div`
   position: relative;
   z-index: 2;
   pointer-events: none;
+  overflow: hidden;
 `;
 
 export const Content = styled.main`

@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
 import { FC, memo, useEffect, useRef, useState } from "react";
-import { useSignRoomMutation } from "../../queries/Main";
+import { useSignRoomMutation } from "@queries";
 import SignRoomModalView, {
   SignRoomModalPropsType,
-} from "../SignRoomModalView";
+} from "@components/SignRoomModalView";
 
 interface PropsType {
   open: boolean;
@@ -18,6 +18,7 @@ const JoinRoomModal: FC<PropsType> = (props) => {
   const [mutate, { loading }] = joinMutation;
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+  const [wait, setWait] = useState<boolean>(false);
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) =>
     setName(e.target.value);
@@ -37,8 +38,11 @@ const JoinRoomModal: FC<PropsType> = (props) => {
       if (!!errors) {
         throw errors;
       }
+      setWait(true);
 
-      router.push(`/${roomCode}`);
+      setTimeout(() => {
+        router.push(`/${roomCode}`);
+      }, 1000);
     } catch (error) {
       inputRef.current?.focus();
       setName("");
@@ -64,7 +68,7 @@ const JoinRoomModal: FC<PropsType> = (props) => {
     title: "방 입장하기",
     input: { ref: inputRef, value: name, onChange, onKeyDown },
     button: { disabled, onClick: submit },
-    loading,
+    loading: loading || wait,
     buttonLabel: "입장",
   };
 

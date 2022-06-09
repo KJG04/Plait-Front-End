@@ -8,6 +8,7 @@ interface Color {
     white: string;
   };
   primary: string;
+  error: string;
 }
 
 interface Font {
@@ -36,6 +37,7 @@ export const theme: Theme = {
       white: "#FFFFFF",
     },
     primary: "#5EF090",
+    error: "#FF5656",
   },
   fonts: {
     heading1: `bold 2.25rem 'Noto Sans KR', 'sans-serif'`,

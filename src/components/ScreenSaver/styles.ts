@@ -8,4 +8,5 @@ export const Canvas = styled.div`
   height: 100vh;
   z-index: 1;
   border: none;
+  overflow: hidden;
 `;

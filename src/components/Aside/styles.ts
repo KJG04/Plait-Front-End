@@ -148,3 +148,30 @@ export const ToggleButton = styled.button`
     transform: rotate(0deg);
   }
 `;
+
+export const LeaveContainer = styled.div`
+  padding: 12px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.colors.grayscale.darkGray};
+  filter: drop-shadow(0px 0px 5px #00000030);
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+  width: 300px;
+  text-align: center;
+`;
+
+export const LeaveButton = styled.button`
+  padding: 8px;
+  background-color: ${({ theme }) => theme.colors.error};
+  color: ${({ theme }) => theme.colors.grayscale.white};
+  border-radius: 10px;
+  width: 100%;
+  text-align: center;
+  transition: filter 0.2s ease-in-out;
+
+  &:hover,
+  &:focus-visible {
+    filter: brightness(1.2);
+  }
+`;

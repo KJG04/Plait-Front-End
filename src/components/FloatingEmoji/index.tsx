@@ -1,9 +1,7 @@
+import { floatingEmojisVar } from "@stores";
+import { FloatingEmojiType } from "@types";
 import gsap, { Elastic, Linear, Power4 } from "gsap";
 import { FC, memo, useCallback, useEffect, useRef } from "react";
-import { useSetRecoilState } from "recoil";
-import floatingEmojisState, {
-  FloatingEmojiType,
-} from "../../atoms/floatingEmojis";
 import * as S from "./styles";
 
 const FloatingEmoji: FC<FloatingEmojiType> = ({
@@ -15,7 +13,6 @@ const FloatingEmoji: FC<FloatingEmojiType> = ({
   name,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const setFloatingEmojis = useSetRecoilState(floatingEmojisState);
 
   const anim = useCallback(() => {
     if (!containerRef.current) {
@@ -50,12 +47,12 @@ const FloatingEmoji: FC<FloatingEmojiType> = ({
           duration: 0.5,
           ease: Power4.easeIn,
           onComplete: () => {
-            setFloatingEmojis((prev) => prev.filter((v) => v.id !== id));
+            floatingEmojisVar(floatingEmojisVar().filter((v) => v.id !== id));
           },
         },
         2.5,
       );
-  }, [id, setFloatingEmojis]);
+  }, [id]);
 
   useEffect(() => {
     anim();

@@ -4,6 +4,7 @@ export const Container = styled.div`
   position: absolute;
   transform: translate(-50%, -50%);
   pointer-events: none;
+  filter: drop-shadow(0px 0px 5px #00000050);
 `;
 
 export const Emoji = styled.div`
@@ -12,7 +13,7 @@ export const Emoji = styled.div`
 `;
 
 export const Name = styled.div`
-  background-color: ${({ color }) => color};
+  background-color: #${({ color }) => color};
   font: ${({ theme }) => theme.fonts.description};
   border-radius: 5px;
   color: ${({ theme }) => theme.colors.grayscale.white};

@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
-import Image from "next/image";
 
-export const Container = styled.button`
+export const Container = styled.div`
   padding: 8px 10px;
   border-radius: 10px;
   border: none;
@@ -12,18 +11,14 @@ export const Container = styled.button`
   width: 100%;
   max-width: 100%;
   min-width: 0px;
-
-  &:hover,
-  &:focus-visible {
-    background-color: ${({ theme }) => theme.colors.grayscale.gray};
-  }
+  user-select: none;
 `;
 
-export const Img = styled(Image)`
+export const Img = styled.div`
   width: 100px;
   height: 100px;
   border-radius: 10px;
-  background-color: ${({ theme }) => theme.colors.grayscale.lightGray};
+  background-color: ${({ theme }) => theme.colors.grayscale.gray};
 `;
 
 export const ContentContainer = styled.div`
@@ -48,17 +43,20 @@ export const Title = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  border-radius: 5px;
+  background-color: ${({ theme }) => theme.colors.grayscale.gray};
+  color: transparent;
 `;
 
-export const Content = styled.div`
-  display: -webkit-box;
-  height: calc(1.2rem * 2);
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
+export const Content = styled.span`
   font: ${({ theme }) => theme.fonts.description};
-  color: ${({ theme }) => theme.colors.grayscale.darkWhite};
+  border-radius: 5px;
+  background-color: ${({ theme }) => theme.colors.grayscale.gray};
+  color: transparent;
+`;
+
+export const ContentWrapper = styled.div`
+  margin-bottom: 2px;
 `;
 
 export const Footer = styled.div`
@@ -67,9 +65,11 @@ export const Footer = styled.div`
   min-width: 0px;
 `;
 
-export const Name = styled.div`
+export const Name = styled.span`
   font: ${({ theme }) => theme.fonts.body2};
-  color: ${({ theme }) => theme.colors.grayscale.darkWhite};
+  border-radius: 5px;
+  background-color: ${({ theme }) => theme.colors.grayscale.gray};
+  color: transparent;
   flex: 1;
   white-space: nowrap;
   overflow: hidden;

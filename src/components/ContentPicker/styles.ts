@@ -1,10 +1,13 @@
 import styled from "@emotion/styled";
 import Input from "../Input";
+import { TwitchPlayer } from "react-twitch-embed";
+import ButtonWithLoading from "@components/ButtonWithLoading";
 
 export const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.grayscale.black};
   border-radius: 20px;
   padding: 24px;
+  padding-top: 48px;
 `;
 
 export const Title = styled.div`
@@ -42,7 +45,7 @@ export const Error = styled.div`
   text-align: center;
 `;
 
-export const Youtube = styled.iframe`
+export const Iframe = styled.iframe`
   width: 100%;
   aspect-ratio: 16 / 9;
   border-radius: 10px;
@@ -50,7 +53,17 @@ export const Youtube = styled.iframe`
   width: 60vw;
 `;
 
-export const Button = styled.button`
+export const Twitch = styled(TwitchPlayer)`
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 16px;
+  width: 60vw;
+  display: block;
+`;
+
+export const Button = styled(ButtonWithLoading)`
   background-color: ${({ theme }) => theme.colors.grayscale.darkGray};
   border-radius: 10px;
   padding: 8px;
@@ -60,12 +73,18 @@ export const Button = styled.button`
   align-items: center;
   display: flex;
   justify-content: center;
-  column-gap: 12px;
 
   &:hover,
   &:focus-visible {
     background-color: ${({ theme }) => theme.colors.grayscale.gray};
   }
+`;
+
+export const ButtonInner = styled.div`
+  display: flex;
+  justify-content: center;
+  column-gap: 12px;
+  align-items: center;
 `;
 
 export const TitleContainer = styled.div`

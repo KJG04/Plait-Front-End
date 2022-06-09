@@ -16,7 +16,7 @@ import {
 } from "matter-js";
 import * as S from "./styles";
 import { useTheme } from "@emotion/react";
-import Triangle from "./Triangle";
+import Triangle from "@components/ScreenSaver/Triangle";
 
 if (process.browser) {
   require("pathseg");

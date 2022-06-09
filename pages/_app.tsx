@@ -1,22 +1,38 @@
 import "../styles/globals.css";
-import type { AppProps } from "next/app";
 import { ThemeProvider } from "@emotion/react";
 import { theme } from "../src/utils/theme";
 import { Toaster } from "react-hot-toast";
-import { RecoilRoot } from "recoil";
 import { ApolloProvider } from "@apollo/client";
-import apolloClient from "../src/utils/apolloClient";
+import { AppProps } from "next/app";
+import apolloClient from "@utils/apolloClient";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { MobileCover } from "@components";
+
+const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppProps) {
+  if (
+    typeof window !== "undefined" &&
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      window.navigator.userAgent,
+    )
+  ) {
+    return (
+      <ThemeProvider theme={theme}>
+        <MobileCover />
+      </ThemeProvider>
+    );
+  }
+
   return (
-    <RecoilRoot>
-      <ApolloProvider client={apolloClient}>
+    <ApolloProvider client={apolloClient}>
+      <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
           <Component {...pageProps} />
           <Toaster position="top-center" />
         </ThemeProvider>
-      </ApolloProvider>
-    </RecoilRoot>
+      </QueryClientProvider>
+    </ApolloProvider>
   );
 }
 

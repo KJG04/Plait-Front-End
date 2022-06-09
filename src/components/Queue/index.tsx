@@ -1,36 +1,45 @@
-import { memo, useRef } from "react";
-import ContentPicker from "../ContentPicker";
-import ModalPortal, { ModalPortalRef } from "../ModalPortal";
-import QueueContent from "../QueueContent";
+import { memo, useMemo, useState } from "react";
+import { QueueContent, ContentPicker } from "@components";
+import { useRoomContext } from "@hooks";
 import * as S from "./styles";
 
 const Queue = () => {
-  const modalRef = useRef<ModalPortalRef>(null);
+  const [open, setOpen] = useState(false);
+  const room = useRoomContext();
+
+  const renderQueue = useMemo(
+    () =>
+      room.contents.map((value, index) => {
+        return (
+          <QueueContent isPlaying={index === 0} data={value} key={value.uuid} />
+        );
+      }),
+    [room],
+  );
 
   return (
     <>
       <div>
         <S.MemberHeader>
           <span>대기열</span>
-          <S.TextButton
-            onClick={() => {
-              modalRef.current?.open();
-            }}
-          >
-            추가
-          </S.TextButton>
+          <S.TextButton onClick={() => setOpen(true)}>추가</S.TextButton>
         </S.MemberHeader>
         <S.Line />
       </div>
       <S.ListContainer>
-        <QueueContent />
-        <QueueContent />
-        <QueueContent />
-        <QueueContent />
+        {renderQueue}
+        {room.contents.length <= 0 && (
+          <S.Message>
+            <div>대기열이 비어있어요.</div>
+            컨텐츠를 추가해보세요!
+          </S.Message>
+        )}
       </S.ListContainer>
-      <ModalPortal ref={modalRef}>
-        <ContentPicker />
-      </ModalPortal>
+      <ContentPicker
+        id={room.code}
+        onClose={() => setOpen(false)}
+        open={open}
+      />
     </>
   );
 };
