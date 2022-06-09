@@ -1,7 +1,6 @@
 import { useReactiveVar } from "@apollo/client";
 import { useRoomContext } from "@hooks";
-import { useDeleteContentMutation } from "@queries/content";
-import { usePlayTimeMutation } from "@queries/room";
+import { useDeleteContentMutation, usePlayTimeMutation } from "@queries";
 import { durationVar, forcePlayTimeVar, playTimeVar } from "@stores";
 import { Content } from "@types";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
@@ -83,7 +82,7 @@ const YoutubePlayer: FC<PropsType> = (props) => {
     if (ref.current) {
       const cur = await ref.current.internalPlayer.getCurrentTime();
 
-      const milli = cur * 1000;
+      const milli = Math.floor(cur * 1000);
 
       playTimeMutate({
         variables: { roomCode: room.code, playTime: milli, force: false },
